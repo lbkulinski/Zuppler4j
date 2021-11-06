@@ -153,85 +153,6 @@ public final class Test {
         return response.body();
     } //getSchema
 
-    private static String getMenusJson() {
-        String uriString = "https://restaurants-api5.zuppler.com/graphql";
-
-        URI uri = URI.create(uriString);
-
-        String[] headers = {"Content-type", "application/json"};
-
-        String operationName = "GetRestaurantMenus";
-
-        String query = """
-                       query GetRestaurantMenus($restaurant_id: Int!) {
-                           menus(restaurantId: $restaurant_id) {
-                               id
-                               name
-                               description
-                               availability {
-                                   custom
-                                   days
-                                   priority
-                                   services
-                                   time {
-                                       open
-                                       close
-                                   }
-                               }
-                               categories {
-                                   name
-                                   items {
-                                       id
-                                   }
-                               }
-                               default
-                               group
-                               image {
-                                   active
-                                   medium
-                                   original
-                                   thumb
-                                   tiny
-                                   xlarge
-                                   xxlarge
-                               }
-                               useCategoryTabs
-                           }
-                       }""";
-
-        Map<String, ?> variables = Map.of("restaurant_id", RESTAURANT_ID);
-
-        Map<String, ?> fields = Map.of("operationName", operationName,
-                                       "query", query,
-                                       "variables", variables);
-
-        Gson gson = new Gson();
-
-        String requestBody = gson.toJson(fields);
-
-        HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(requestBody);
-
-        HttpRequest request = HttpRequest.newBuilder(uri)
-                                         .headers(headers)
-                                         .POST(bodyPublisher)
-                                         .build();
-
-        HttpResponse.BodyHandler<String> bodyHandler = HttpResponse.BodyHandlers.ofString();
-
-        HttpResponse<String> response;
-
-        try {
-            response = HttpClient.newHttpClient()
-                                 .send(request, bodyHandler);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-
-            return null;
-        } //end try catch
-
-        return response.body();
-    } //getMenusJson
-
     private static String getItemDetailJson(String itemId) {
         String uriString = "https://restaurants-api5.zuppler.com/graphql";
 
@@ -321,6 +242,85 @@ public final class Test {
         return response.body();
     } //getItemDetailJson
 
+    private static String getMenusJson() {
+        String uriString = "https://restaurants-api5.zuppler.com/graphql";
+
+        URI uri = URI.create(uriString);
+
+        String[] headers = {"Content-type", "application/json"};
+
+        String operationName = "GetRestaurantMenus";
+
+        String query = """
+                       query GetRestaurantMenus($restaurant_id: Int!) {
+                           menus(restaurantId: $restaurant_id) {
+                               id
+                               name
+                               description
+                               availability {
+                                   custom
+                                   days
+                                   priority
+                                   services
+                                   time {
+                                       open
+                                       close
+                                   }
+                               }
+                               categories {
+                                   name
+                                   items {
+                                       id
+                                   }
+                               }
+                               default
+                               group
+                               image {
+                                   active
+                                   medium
+                                   original
+                                   thumb
+                                   tiny
+                                   xlarge
+                                   xxlarge
+                               }
+                               useCategoryTabs
+                           }
+                       }""";
+
+        Map<String, ?> variables = Map.of("restaurant_id", RESTAURANT_ID);
+
+        Map<String, ?> fields = Map.of("operationName", operationName,
+                                       "query", query,
+                                       "variables", variables);
+
+        Gson gson = new Gson();
+
+        String requestBody = gson.toJson(fields);
+
+        HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofString(requestBody);
+
+        HttpRequest request = HttpRequest.newBuilder(uri)
+                                         .headers(headers)
+                                         .POST(bodyPublisher)
+                                         .build();
+
+        HttpResponse.BodyHandler<String> bodyHandler = HttpResponse.BodyHandlers.ofString();
+
+        HttpResponse<String> response;
+
+        try {
+            response = HttpClient.newHttpClient()
+                                 .send(request, bodyHandler);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+
+            return null;
+        } //end try catch
+
+        return response.body();
+    } //getMenusJson
+
     private static TimeAvailability getTimeAvailability(JsonObject timeAvailabilityObject) {
         Objects.requireNonNull(timeAvailabilityObject, "the specified time availability object is null");
 
@@ -380,9 +380,11 @@ public final class Test {
 
         JsonArray timeArray = availabilityObject.getAsJsonArray("time");
 
-        List<TimeAvailability> timeAvailabilities = new ArrayList<>();
+        List<TimeAvailability> time = null;
 
         if (timeArray != null) {
+            time = new ArrayList<>();
+
             for (JsonElement timeAvailabilityElement : timeArray) {
                 if (!timeAvailabilityElement.isJsonObject()) {
                     continue;
@@ -392,13 +394,13 @@ public final class Test {
 
                 TimeAvailability timeAvailability = Test.getTimeAvailability(timeAvailabilityObject);
 
-                timeAvailabilities.add(timeAvailability);
+                time.add(timeAvailability);
             } //end if
+
+            time = Collections.unmodifiableList(time);
         } //end if
 
-        timeAvailabilities = Collections.unmodifiableList(timeAvailabilities);
-
-        return new Availability(custom, days, priority, services, timeAvailabilities);
+        return new Availability(custom, days, priority, services, time);
     } //getAvailability
 
     private static Menu getMenu(JsonObject menuObject) {
@@ -456,6 +458,8 @@ public final class Test {
         String menusJson = Test.getMenusJson();
 
         Test.getMenus(menusJson)
+            .stream()
+            .map(Menu::availability)
             .forEach(System.out::println);
     } //main
 }
