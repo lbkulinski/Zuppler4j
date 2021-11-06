@@ -1,0 +1,88 @@
+TimeAvailability
+	- Integer close
+	- Integer open
+
+Availability
+	- Boolean custom
+	- Integer days
+	- Integer priority
+	- Integer services
+	- List<TimeAvailability> time
+
+Image
+	- Boolean active
+	- String medium
+	- String original
+	- String thumb
+	- String tiny
+	- String xlarge
+	- String xxlarge
+
+ItemOption
+	- Boolean active
+	- Boolean default
+	- String description
+	- Integer dishId
+	- String group
+	- String groupLabel
+	- Integer id
+	- Image image
+	- String name
+	- Float price
+	- Boolean pricedIn
+	- Integer priority
+	- Integer weight
+
+ItemModifier
+	- Boolean active
+	- Boolean allowGrouping
+	- List<String> dependsOn
+	- String description
+	- Integer divider
+	- Integer id
+	- Integer masterModifierId
+	- Integer maxSelections
+	- Integer minSelections
+	- Boolean modifierQuantity
+	- Boolean multipleModifiers
+	- Boolean multipleSelections
+	- String name
+	- List<ItemOption> options
+	- Integer priority
+
+ItemSize
+	- Boolean active
+	- Boolean coupon
+	- Integer id
+	- Integer minQty
+	- List<ItemModifier> modifiers
+	- Float price
+	- Integer priority
+	- String servingLabel
+	- Integer servingQty
+	- Integer sizeId
+	- String sizeName
+
+MenuItem
+	- String alias
+	- Availability availability
+	- String description
+	- List<String> dietaryPreferences
+	- Integer id
+	- Image image
+	- String name
+	- List<ItemSize> sizes
+	- Integer spicy
+	- Integer taxCategoryId
+	- Boolean veg
+
+Category
+	- Boolean active
+	- String description
+	- Integer id
+	- Image image
+	- List<MenuItem> items
+	- Integer minOrderQty
+	- String name
+	- Integer priority
+	- List<String> tags
