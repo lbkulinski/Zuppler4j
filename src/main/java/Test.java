@@ -1,4 +1,7 @@
 import com.google.gson.*;
+import com.zuppler4j.Availability;
+import com.zuppler4j.TimeAvailability;
+import com.zuppler4j.menu.Menu;
 
 import java.io.IOException;
 import java.net.URI;
@@ -229,54 +232,6 @@ public final class Test {
         return response.body();
     } //getMenusJson
 
-    private static Map<String, Set<String>> getCategoryIdsMap() {
-        String menusJson = Test.getMenusJson();
-
-        if (menusJson == null) {
-            return Map.of();
-        } //end if
-
-        JsonElement jsonElement = JsonParser.parseString(menusJson);
-
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-        JsonObject data = jsonObject.getAsJsonObject("data");
-
-        JsonArray menus = data.getAsJsonArray("menus");
-
-        Map<String, Set<String>> categoryIdsMap = new HashMap<>();
-
-        for (JsonElement menuElement : menus) {
-            JsonObject menu = menuElement.getAsJsonObject();
-
-            JsonArray categories = menu.getAsJsonArray("categories");
-
-            for (JsonElement categoryElement : categories) {
-                JsonObject category = categoryElement.getAsJsonObject();
-
-                String name = category.get("name")
-                                      .getAsString();
-
-                JsonArray items = category.getAsJsonArray("items");
-
-                Set<String> ids = new HashSet<>();
-
-                for (JsonElement itemElement : items) {
-                    JsonObject item = itemElement.getAsJsonObject();
-
-                    String id = item.get("id")
-                                    .getAsString();
-
-                    ids.add(id);
-                } //end for
-
-                categoryIdsMap.put(name, ids);
-            } //end for
-        } //end for
-
-        return Collections.unmodifiableMap(categoryIdsMap);
-    } //getCategoryIdsMap
-
     private static String getItemDetailJson(String itemId) {
         String uriString = "https://restaurants-api5.zuppler.com/graphql";
 
@@ -366,7 +321,141 @@ public final class Test {
         return response.body();
     } //getItemDetailJson
 
+    private static TimeAvailability getTimeAvailability(JsonObject timeAvailabilityObject) {
+        Objects.requireNonNull(timeAvailabilityObject, "the specified time availability object is null");
+
+        JsonElement openElement = timeAvailabilityObject.get("open");
+
+        Integer open = null;
+
+        if ((openElement != null) && !openElement.isJsonNull()) {
+            open = openElement.getAsInt();
+        } //end if
+
+        JsonElement closeElement = timeAvailabilityObject.get("close");
+
+        Integer close = null;
+
+        if ((closeElement != null) && !closeElement.isJsonNull()) {
+            close = closeElement.getAsInt();
+        } //end if
+
+        return new TimeAvailability(open, close);
+    } //getTimeAvailability
+
+    private static Availability getAvailability(JsonObject availabilityObject) {
+        Objects.requireNonNull(availabilityObject, "the specified availability object is null");
+
+        JsonElement customElement = availabilityObject.get("custom");
+
+        Boolean custom = null;
+
+        if ((customElement != null) && !customElement.isJsonNull()) {
+            custom = customElement.getAsBoolean();
+        } //end if
+
+        JsonElement daysElement = availabilityObject.get("days");
+
+        Integer days = null;
+
+        if ((daysElement != null) && !daysElement.isJsonNull()) {
+            days = daysElement.getAsInt();
+        } //end if
+
+        JsonElement priorityElement = availabilityObject.get("priority");
+
+        Integer priority = null;
+
+        if ((priorityElement != null) && !priorityElement.isJsonNull()) {
+            priority = priorityElement.getAsInt();
+        } //end if
+
+        JsonElement servicesElement = availabilityObject.get("services");
+
+        Integer services = null;
+
+        if ((servicesElement != null) && !servicesElement.isJsonNull()) {
+            services = servicesElement.getAsInt();
+        } //end if
+
+        JsonArray timeArray = availabilityObject.getAsJsonArray("time");
+
+        List<TimeAvailability> timeAvailabilities = new ArrayList<>();
+
+        if (timeArray != null) {
+            for (JsonElement timeAvailabilityElement : timeArray) {
+                if (!timeAvailabilityElement.isJsonObject()) {
+                    continue;
+                } //end if
+
+                JsonObject timeAvailabilityObject = timeAvailabilityElement.getAsJsonObject();
+
+                TimeAvailability timeAvailability = Test.getTimeAvailability(timeAvailabilityObject);
+
+                timeAvailabilities.add(timeAvailability);
+            } //end if
+        } //end if
+
+        timeAvailabilities = Collections.unmodifiableList(timeAvailabilities);
+
+        return new Availability(custom, days, priority, services, timeAvailabilities);
+    } //getAvailability
+
+    private static Menu getMenu(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonObject availabilityObject = menuObject.getAsJsonObject("availability");
+
+        Availability availability = null;
+
+        if (availabilityObject != null) {
+            availability = Test.getAvailability(availabilityObject);
+        } //end if
+
+        return new Menu(null, null, null, null, availability, null,
+                        null, null, null);
+    } //getMenu
+
+    private static Set<Menu> getMenus(String menusJson) {
+        Objects.requireNonNull(menusJson, "the specified menus JSON is null");
+
+        JsonElement jsonElement = JsonParser.parseString(menusJson);
+
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        JsonObject dataObject = jsonObject.getAsJsonObject("data");
+
+        if (dataObject == null) {
+            return Set.of();
+        } //end if
+
+        JsonArray menusArray = dataObject.getAsJsonArray("menus");
+
+        if (menusArray == null) {
+            return Set.of();
+        } //end if
+
+        Set<Menu> menus = new HashSet<>();
+
+        for (JsonElement menuElement : menusArray) {
+            if (!menuElement.isJsonObject()) {
+                continue;
+            } //end if
+
+            JsonObject menuObject = menuElement.getAsJsonObject();
+
+            Menu menu = Test.getMenu(menuObject);
+
+            menus.add(menu);
+        } //end for
+
+        return Collections.unmodifiableSet(menus);
+    } //getMenus
+
     public static void main(String[] args) {
-        System.out.println(Test.getMenusJson());
+        String menusJson = Test.getMenusJson();
+
+        Test.getMenus(menusJson)
+            .forEach(System.out::println);
     } //main
 }
