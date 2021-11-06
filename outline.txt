@@ -86,3 +86,14 @@ Category
 	- String name
 	- Integer priority
 	- List<String> tags
+
+Menu
+	- Availability availability
+	- List<Category> categories
+	- Boolean default
+	- String description
+	- String group
+	- Integer id
+	- Image image
+	- String name
+	- Boolean useCategoryTabs
