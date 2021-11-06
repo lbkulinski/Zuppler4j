@@ -1,0 +1,321 @@
+{
+  "data": {
+    "menus": [
+      {
+        "availability": {
+          "custom": false,
+          "days": 255,
+          "priority": 0,
+          "services": 15,
+          "time": []
+        },
+        "categories": [
+          {
+            "items": [
+              {
+                "id": 774516
+              },
+              {
+                "id": 1320260
+              },
+              {
+                "id": 774517
+              },
+              {
+                "id": 774521
+              },
+              {
+                "id": 774518
+              },
+              {
+                "id": 774519
+              },
+              {
+                "id": 774520
+              },
+              {
+                "id": 774522
+              },
+              {
+                "id": 774524
+              },
+              {
+                "id": 774525
+              },
+              {
+                "id": 774526
+              },
+              {
+                "id": 774527
+              },
+              {
+                "id": 795068
+              }
+            ],
+            "name": "Sandwiches"
+          },
+          {
+            "items": [],
+            "name": "Soups "
+          },
+          {
+            "items": [
+              {
+                "id": 1482368
+              },
+              {
+                "id": 1103691
+              }
+            ],
+            "name": "Other Delicious Items "
+          },
+          {
+            "items": [
+              {
+                "id": 774530
+              },
+              {
+                "id": 774531
+              },
+              {
+                "id": 774532
+              },
+              {
+                "id": 774535
+              },
+              {
+                "id": 774536
+              },
+              {
+                "id": 774537
+              }
+            ],
+            "name": "Drinks & Chips"
+          },
+          {
+            "items": [
+              {
+                "id": 774538
+              },
+              {
+                "id": 3102064
+              },
+              {
+                "id": 3102065
+              },
+              {
+                "id": 3102066
+              },
+              {
+                "id": 774541
+              },
+              {
+                "id": 774540
+              },
+              {
+                "id": 774542
+              },
+              {
+                "id": 774543
+              },
+              {
+                "id": 3195714
+              },
+              {
+                "id": 3195733
+              }
+            ],
+            "name": "Dessert"
+          },
+          {
+            "items": [
+              {
+                "id": 3178283
+              },
+              {
+                "id": 1906046
+              },
+              {
+                "id": 775060
+              },
+              {
+                "id": 1534238
+              },
+              {
+                "id": 792771
+              },
+              {
+                "id": 1534239
+              },
+              {
+                "id": 1898576
+              },
+              {
+                "id": 1919219
+              },
+              {
+                "id": 1906047
+              }
+            ],
+            "name": "Grocery"
+          }
+        ],
+        "default": true,
+        "description": null,
+        "group": null,
+        "id": 4550,
+        "image": {
+          "active": false,
+          "medium": null,
+          "original": null,
+          "thumb": null,
+          "tiny": null,
+          "xlarge": null,
+          "xxlarge": null
+        },
+        "name": "Menu",
+        "useCategoryTabs": null
+      },
+      {
+        "availability": {
+          "custom": false,
+          "days": 0,
+          "priority": 1,
+          "services": 15,
+          "time": [
+            {
+              "close": 0,
+              "open": 0
+            },
+            {
+              "close": 540,
+              "open": 540
+            },
+            {
+              "close": 540,
+              "open": 540
+            },
+            {
+              "close": 540,
+              "open": 540
+            },
+            {
+              "close": 540,
+              "open": 540
+            },
+            {
+              "close": 540,
+              "open": 540
+            },
+            {
+              "close": 540,
+              "open": 540
+            }
+          ]
+        },
+        "categories": [
+          {
+            "items": [
+              {
+                "id": 789505
+              }
+            ],
+            "name": "Sandwich Platter"
+          },
+          {
+            "items": [
+              {
+                "id": 774544
+              }
+            ],
+            "name": "Antipasti Tray"
+          },
+          {
+            "items": [],
+            "name": "Salad "
+          },
+          {
+            "items": [
+              {
+                "id": 774556
+              },
+              {
+                "id": 774559
+              },
+              {
+                "id": 774560
+              },
+              {
+                "id": 774561
+              },
+              {
+                "id": 774562
+              }
+            ],
+            "name": "Desserts"
+          },
+          {
+            "items": [
+              {
+                "id": 818042
+              },
+              {
+                "id": 818043
+              },
+              {
+                "id": 818041
+              }
+            ],
+            "name": "Dessert Tray"
+          },
+          {
+            "items": [
+              {
+                "id": 774564
+              },
+              {
+                "id": 774565
+              },
+              {
+                "id": 774568
+              },
+              {
+                "id": 774569
+              },
+              {
+                "id": 774570
+              },
+              {
+                "id": 774563
+              }
+            ],
+            "name": "Drinks and Chips"
+          },
+          {
+            "items": [
+              {
+                "id": 818044
+              }
+            ],
+            "name": "Utensils & Plates"
+          }
+        ],
+        "default": false,
+        "description": null,
+        "group": null,
+        "id": 27705,
+        "image": {
+          "active": false,
+          "medium": null,
+          "original": null,
+          "thumb": null,
+          "tiny": null,
+          "xlarge": null,
+          "xxlarge": null
+        },
+        "name": "Catering Menu",
+        "useCategoryTabs": false
+      }
+    ]
+  }
+}
