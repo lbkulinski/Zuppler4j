@@ -328,16 +328,24 @@ public final class Test {
 
         Integer open = null;
 
-        if ((openElement != null) && !openElement.isJsonNull()) {
-            open = openElement.getAsInt();
+        if ((openElement != null) && openElement.isJsonPrimitive()) {
+            JsonPrimitive openPrimitive = openElement.getAsJsonPrimitive();
+
+            if (openPrimitive.isNumber()) {
+                open = openPrimitive.getAsInt();
+            } //end if
         } //end if
 
         JsonElement closeElement = timeAvailabilityObject.get("close");
 
         Integer close = null;
 
-        if ((closeElement != null) && !closeElement.isJsonNull()) {
-            close = closeElement.getAsInt();
+        if ((closeElement != null) && closeElement.isJsonPrimitive()) {
+            JsonPrimitive closePrimitive = closeElement.getAsJsonPrimitive();
+
+            if (closePrimitive.isNumber()) {
+                close = closePrimitive.getAsInt();
+            } //end if
         } //end if
 
         return new TimeAvailability(open, close);
@@ -350,49 +358,67 @@ public final class Test {
 
         Boolean custom = null;
 
-        if ((customElement != null) && !customElement.isJsonNull()) {
-            custom = customElement.getAsBoolean();
+        if ((customElement != null) && customElement.isJsonPrimitive()) {
+            JsonPrimitive customPrimitive = customElement.getAsJsonPrimitive();
+
+            if (customPrimitive.isBoolean()) {
+                custom = customPrimitive.getAsBoolean();
+            } //end if
         } //end if
 
         JsonElement daysElement = availabilityObject.get("days");
 
         Integer days = null;
 
-        if ((daysElement != null) && !daysElement.isJsonNull()) {
-            days = daysElement.getAsInt();
+        if ((daysElement != null) && daysElement.isJsonPrimitive()) {
+            JsonPrimitive daysPrimitive = daysElement.getAsJsonPrimitive();
+
+            if (daysPrimitive.isNumber()) {
+                days = daysPrimitive.getAsInt();
+            } //end if
         } //end if
 
         JsonElement priorityElement = availabilityObject.get("priority");
 
         Integer priority = null;
 
-        if ((priorityElement != null) && !priorityElement.isJsonNull()) {
-            priority = priorityElement.getAsInt();
+        if ((priorityElement != null) && priorityElement.isJsonPrimitive()) {
+            JsonPrimitive priorityPrimitive = priorityElement.getAsJsonPrimitive();
+
+            if (priorityPrimitive.isNumber()) {
+                priority = priorityPrimitive.getAsInt();
+            } //end if
         } //end if
 
         JsonElement servicesElement = availabilityObject.get("services");
 
         Integer services = null;
 
-        if ((servicesElement != null) && !servicesElement.isJsonNull()) {
-            services = servicesElement.getAsInt();
+        if ((servicesElement != null) && servicesElement.isJsonPrimitive()) {
+            JsonPrimitive servicesPrimitive = servicesElement.getAsJsonPrimitive();
+
+            if (servicesPrimitive.isNumber()) {
+                services = servicesPrimitive.getAsInt();
+            } //end if
         } //end if
 
-        JsonArray timeArray = availabilityObject.getAsJsonArray("time");
+        JsonElement timeElement = availabilityObject.get("time");
 
         List<TimeAvailability> time = null;
 
-        if (timeArray != null) {
+        if ((timeElement != null) && timeElement.isJsonArray()) {
+            JsonArray timeArray = timeElement.getAsJsonArray();
+
             time = new ArrayList<>();
 
             for (JsonElement timeAvailabilityElement : timeArray) {
-                if (!timeAvailabilityElement.isJsonObject()) {
-                    continue;
+                TimeAvailability timeAvailability = null;
+
+                if (timeAvailabilityElement.isJsonObject()) {
+                    JsonObject timeAvailabilityObject = timeAvailabilityElement.getAsJsonObject();
+
+                    timeAvailability = Test.getTimeAvailability(timeAvailabilityObject);
                 } //end if
-
-                JsonObject timeAvailabilityObject = timeAvailabilityElement.getAsJsonObject();
-
-                TimeAvailability timeAvailability = Test.getTimeAvailability(timeAvailabilityObject);
 
                 time.add(timeAvailability);
             } //end if
@@ -406,16 +432,81 @@ public final class Test {
     private static Menu getMenu(JsonObject menuObject) {
         Objects.requireNonNull(menuObject, "the specified menu object is null");
 
-        JsonObject availabilityObject = menuObject.getAsJsonObject("availability");
+        JsonElement idElement = menuObject.get("id");
+
+        Integer id = null;
+
+        if ((idElement != null) && idElement.isJsonPrimitive()) {
+            JsonPrimitive idPrimitive = idElement.getAsJsonPrimitive();
+
+            if (idPrimitive.isNumber()) {
+                id = idPrimitive.getAsInt();
+            } //end if
+        } //end if
+
+        JsonElement nameElement = menuObject.get("name");
+
+        String name = null;
+
+        if ((nameElement != null) && nameElement.isJsonPrimitive()) {
+            JsonPrimitive namePrimitive = nameElement.getAsJsonPrimitive();
+
+            if (namePrimitive.isString()) {
+                name = namePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement descriptionElement = menuObject.get("description");
+
+        String description = null;
+
+        if ((descriptionElement != null) && descriptionElement.isJsonPrimitive()) {
+            JsonPrimitive descriptionPrimitive = descriptionElement.getAsJsonPrimitive();
+
+            if (descriptionPrimitive.isString()) {
+                description = descriptionPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        //TODO: Parse categories
+
+        JsonElement availabilityElement = menuObject.get("availability");
 
         Availability availability = null;
 
-        if (availabilityObject != null) {
+        if ((availabilityElement != null) && availabilityElement.isJsonObject()) {
+            JsonObject availabilityObject = availabilityElement.getAsJsonObject();
+
             availability = Test.getAvailability(availabilityObject);
         } //end if
 
-        return new Menu(null, null, null, null, availability, null,
-                        null, null, null);
+        JsonElement preselectedElement = menuObject.get("default");
+
+        Boolean preselected = null;
+
+        if ((preselectedElement != null) && preselectedElement.isJsonPrimitive()) {
+            JsonPrimitive preselectedPrimitive = preselectedElement.getAsJsonPrimitive();
+
+            if (preselectedPrimitive.isBoolean()) {
+                preselected = preselectedPrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        JsonElement groupElement = menuObject.get("group");
+
+        String group = null;
+
+        if ((groupElement != null) && groupElement.isJsonPrimitive()) {
+            JsonPrimitive groupPrimitive = groupElement.getAsJsonPrimitive();
+
+            if (groupPrimitive.isString()) {
+                group = groupPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        //
+
+        return new Menu(id, name, description, null, availability, preselected, group, null, null);
     } //getMenu
 
     private static Set<Menu> getMenus(String menusJson) {
@@ -423,30 +514,38 @@ public final class Test {
 
         JsonElement jsonElement = JsonParser.parseString(menusJson);
 
+        if (!jsonElement.isJsonObject()) {
+            return Set.of();
+        } //end if
+
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        JsonObject dataObject = jsonObject.getAsJsonObject("data");
+        JsonElement dataElement = jsonObject.get("data");
 
-        if (dataObject == null) {
+        if ((dataElement == null) || !dataElement.isJsonObject()) {
             return Set.of();
         } //end if
 
-        JsonArray menusArray = dataObject.getAsJsonArray("menus");
+        JsonObject dataObject = dataElement.getAsJsonObject();
 
-        if (menusArray == null) {
+        JsonElement menusElement = dataObject.get("menus");
+
+        if ((menusElement == null) || !menusElement.isJsonArray()) {
             return Set.of();
         } //end if
+
+        JsonArray menusArray = menusElement.getAsJsonArray();
 
         Set<Menu> menus = new HashSet<>();
 
         for (JsonElement menuElement : menusArray) {
-            if (!menuElement.isJsonObject()) {
-                continue;
+            Menu menu = null;
+
+            if (menuElement.isJsonObject()) {
+                JsonObject menuObject = menuElement.getAsJsonObject();
+
+                menu = Test.getMenu(menuObject);
             } //end if
-
-            JsonObject menuObject = menuElement.getAsJsonObject();
-
-            Menu menu = Test.getMenu(menuObject);
 
             menus.add(menu);
         } //end for
@@ -458,8 +557,6 @@ public final class Test {
         String menusJson = Test.getMenusJson();
 
         Test.getMenus(menusJson)
-            .stream()
-            .map(Menu::availability)
             .forEach(System.out::println);
     } //main
 }
