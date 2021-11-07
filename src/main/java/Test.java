@@ -1,6 +1,8 @@
 import com.google.gson.*;
 import com.zuppler4j.Availability;
+import com.zuppler4j.Image;
 import com.zuppler4j.TimeAvailability;
+import com.zuppler4j.menu.Category;
 import com.zuppler4j.menu.Menu;
 
 import java.io.IOException;
@@ -444,6 +446,18 @@ public final class Test {
         return new Availability(custom, days, priority, services, time);
     } //getAvailability
 
+    private static Category getCategory(JsonObject categoryObject) {
+        Objects.requireNonNull(categoryObject, "the specified category object is null");
+
+        return null;
+    } //getCategory
+
+    private static Image getImage(JsonObject imageObject) {
+        Objects.requireNonNull(imageObject, "the specified image object is null");
+
+        return null;
+    } //getImage
+
     private static Menu getMenu(JsonObject menuObject) {
         Objects.requireNonNull(menuObject, "the specified menu object is null");
 
@@ -483,7 +497,29 @@ public final class Test {
             } //end if
         } //end if
 
-        //TODO: Parse categories
+        JsonElement categoriesElement = menuObject.get("categories");
+
+        List<Category> categories = null;
+
+        if ((categoriesElement != null) && categoriesElement.isJsonArray()) {
+            JsonArray categoriesArray = categoriesElement.getAsJsonArray();
+
+            categories = new ArrayList<>();
+
+            for (JsonElement categoryElement : categoriesArray) {
+                Category category = null;
+
+                if (categoryElement.isJsonObject()) {
+                    JsonObject categoryObject = categoryElement.getAsJsonObject();
+
+                    category = Test.getCategory(categoryObject);
+                } //end if
+
+                categories.add(category);
+            } //end for
+
+            categories = Collections.unmodifiableList(categories);
+        } //end if
 
         JsonElement availabilityElement = menuObject.get("availability");
 
@@ -519,9 +555,29 @@ public final class Test {
             } //end if
         } //end if
 
-        //
+        JsonElement imageElement = menuObject.get("image");
 
-        return new Menu(id, name, description, null, availability, preselected, group, null, null);
+        Image image = null;
+
+        if ((imageElement != null) && imageElement.isJsonObject()) {
+            JsonObject imageObject = imageElement.getAsJsonObject();
+
+            image = Test.getImage(imageObject);
+        } //end if
+
+        JsonElement useCategoryTabsElement = menuObject.get("useCategoryTabs");
+
+        Boolean useCategoryTabs = null;
+
+        if ((useCategoryTabsElement != null) && useCategoryTabsElement.isJsonPrimitive()) {
+            JsonPrimitive useCategoryTabsPrimitive = useCategoryTabsElement.getAsJsonPrimitive();
+
+            if (useCategoryTabsPrimitive.isBoolean()) {
+                useCategoryTabs = useCategoryTabsPrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        return new Menu(id, name, description, categories, availability, preselected, group, image, useCategoryTabs);
     } //getMenu
 
     private static Set<Menu> getMenus(String menusJson) {
