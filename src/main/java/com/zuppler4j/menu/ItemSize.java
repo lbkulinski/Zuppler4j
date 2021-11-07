@@ -1,12 +1,14 @@
 package com.zuppler4j.menu;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * An item size of the Zuppler API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 6, 2021
+ * @version November 7, 2021
  * @param id the ID of this item size
  * @param price the price of this item size
  * @param sizeId the size ID of this item size
@@ -22,4 +24,26 @@ import java.util.List;
 public record ItemSize(Integer id, Float price, Integer sizeId, String sizeName, List<ItemModifier> modifiers,
                        Boolean active, Boolean coupon, Integer minQty, Integer priority, String servingLabel,
                        Integer servingQty) {
+    /**
+     * Constructs an instance of the {@code ItemSize} class.
+     *
+     * @param id the ID to be used in construction
+     * @param price the price to be used in construction
+     * @param sizeId the size ID to be used in construction
+     * @param sizeName the size name to be used in construction
+     * @param modifiers the {@code List} of {@code ItemModifier}s to be used in construction
+     * @param active the active flag to be used in construction
+     * @param coupon the coupon flag to be used in construction
+     * @param minQty the minimum quantity to be used in construction
+     * @param priority the priority to be used in construction
+     * @param servingLabel the serving label to be used in construction
+     * @param servingQty the serving quantity to be used in construction
+     */
+    public ItemSize {
+        if (modifiers != null) {
+            modifiers = new ArrayList<>(modifiers);
+
+            modifiers = Collections.unmodifiableList(modifiers);
+        } //end if
+    } //ItemSize
 }
