@@ -545,11 +545,159 @@ public final class Test {
         return new Availability(custom, days, priority, services, time);
     } //getAvailability
 
-    private static Image getImage(JsonObject imageObject) {
-        Objects.requireNonNull(imageObject, "the specified image object is null");
+    private static Boolean getPreselected(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
 
-        return null;
+        JsonElement preselectedElement = menuObject.get("default");
+
+        Boolean preselected = null;
+
+        if ((preselectedElement != null) && preselectedElement.isJsonPrimitive()) {
+            JsonPrimitive preselectedPrimitive = preselectedElement.getAsJsonPrimitive();
+
+            if (preselectedPrimitive.isBoolean()) {
+                preselected = preselectedPrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        return preselected;
+    } //getPreselected
+
+    private static String getGroup(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement groupElement = menuObject.get("group");
+
+        String group = null;
+
+        if ((groupElement != null) && groupElement.isJsonPrimitive()) {
+            JsonPrimitive groupPrimitive = groupElement.getAsJsonPrimitive();
+
+            if (groupPrimitive.isString()) {
+                group = groupPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        return group;
+    } //getGroup
+
+    private static Image getImage(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement imageElement = menuObject.get("image");
+
+        if ((imageElement == null) || !imageElement.isJsonObject()) {
+            return null;
+        } //end if
+
+        JsonObject imageObject = imageElement.getAsJsonObject();
+
+        JsonElement activeElement = imageObject.get("active");
+
+        Boolean active = null;
+
+        if ((activeElement != null) && activeElement.isJsonPrimitive()) {
+            JsonPrimitive activePrimitive = activeElement.getAsJsonPrimitive();
+
+            if (activePrimitive.isBoolean()) {
+                active = activePrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        JsonElement mediumElement = imageObject.get("medium");
+
+        String medium = null;
+
+        if ((mediumElement != null) && mediumElement.isJsonPrimitive()) {
+            JsonPrimitive mediumPrimitive = mediumElement.getAsJsonPrimitive();
+
+            if (mediumPrimitive.isString()) {
+                medium = mediumPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement originalElement = imageObject.get("original");
+
+        String original = null;
+
+        if ((originalElement != null) && originalElement.isJsonPrimitive()) {
+            JsonPrimitive originalPrimitive = originalElement.getAsJsonPrimitive();
+
+            if (originalPrimitive.isString()) {
+                original = originalPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement thumbElement = imageObject.get("thumb");
+
+        String thumb = null;
+
+        if ((thumbElement != null) && thumbElement.isJsonPrimitive()) {
+            JsonPrimitive thumbPrimitive = thumbElement.getAsJsonPrimitive();
+
+            if (thumbPrimitive.isString()) {
+                thumb = thumbPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement tinyElement = imageObject.get("tiny");
+
+        String tiny = null;
+
+        if ((tinyElement != null) && tinyElement.isJsonPrimitive()) {
+            JsonPrimitive tinyPrimitive = tinyElement.getAsJsonPrimitive();
+
+            if (tinyPrimitive.isString()) {
+                tiny = tinyPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement xlargeElement = imageObject.get("xlarge");
+
+        String xlarge = null;
+
+        if ((xlargeElement != null) && xlargeElement.isJsonPrimitive()) {
+            JsonPrimitive xlargePrimitive = xlargeElement.getAsJsonPrimitive();
+
+            if (xlargePrimitive.isString()) {
+                xlarge = xlargePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        //
+
+        JsonElement xxlargeElement = imageObject.get("xxlarge");
+
+        String xxlarge = null;
+
+        if ((xxlargeElement != null) && xxlargeElement.isJsonPrimitive()) {
+            JsonPrimitive xxlargePrimitive = xxlargeElement.getAsJsonPrimitive();
+
+            if (xxlargePrimitive.isString()) {
+                xxlarge = xxlargePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        return new Image(active, medium, original, thumb, tiny, xlarge, xxlarge);
     } //getImage
+
+    private static Boolean getUseCategoryTabs(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement useCategoryTabsElement = menuObject.get("useCategoryTabs");
+
+        Boolean useCategoryTabs = null;
+
+        if ((useCategoryTabsElement != null) && useCategoryTabsElement.isJsonPrimitive()) {
+            JsonPrimitive useCategoryTabsPrimitive = useCategoryTabsElement.getAsJsonPrimitive();
+
+            if (useCategoryTabsPrimitive.isBoolean()) {
+                useCategoryTabs = useCategoryTabsPrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        return useCategoryTabs;
+    } //getUseCategoryTabs
 
     private static Menu getMenu(JsonObject menuObject) {
         Objects.requireNonNull(menuObject, "the specified menu object is null");
@@ -564,51 +712,13 @@ public final class Test {
 
         Availability availability = Test.getAvailability(menuObject);
 
-        JsonElement preselectedElement = menuObject.get("default");
+        Boolean preselected = Test.getPreselected(menuObject);
 
-        Boolean preselected = null;
+        String group = Test.getGroup(menuObject);
 
-        if ((preselectedElement != null) && preselectedElement.isJsonPrimitive()) {
-            JsonPrimitive preselectedPrimitive = preselectedElement.getAsJsonPrimitive();
+        Image image = getImage(menuObject);
 
-            if (preselectedPrimitive.isBoolean()) {
-                preselected = preselectedPrimitive.getAsBoolean();
-            } //end if
-        } //end if
-
-        JsonElement groupElement = menuObject.get("group");
-
-        String group = null;
-
-        if ((groupElement != null) && groupElement.isJsonPrimitive()) {
-            JsonPrimitive groupPrimitive = groupElement.getAsJsonPrimitive();
-
-            if (groupPrimitive.isString()) {
-                group = groupPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement imageElement = menuObject.get("image");
-
-        Image image = null;
-
-        if ((imageElement != null) && imageElement.isJsonObject()) {
-            JsonObject imageObject = imageElement.getAsJsonObject();
-
-            image = Test.getImage(imageObject);
-        } //end if
-
-        JsonElement useCategoryTabsElement = menuObject.get("useCategoryTabs");
-
-        Boolean useCategoryTabs = null;
-
-        if ((useCategoryTabsElement != null) && useCategoryTabsElement.isJsonPrimitive()) {
-            JsonPrimitive useCategoryTabsPrimitive = useCategoryTabsElement.getAsJsonPrimitive();
-
-            if (useCategoryTabsPrimitive.isBoolean()) {
-                useCategoryTabs = useCategoryTabsPrimitive.getAsBoolean();
-            } //end if
-        } //end if
+        Boolean useCategoryTabs = Test.getUseCategoryTabs(menuObject);
 
         return new Menu(id, name, description, categories, availability, preselected, group, image, useCategoryTabs);
     } //getMenu
