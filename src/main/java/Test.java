@@ -338,6 +338,96 @@ public final class Test {
         return response.body();
     } //getMenusJson
 
+    private static Integer getId(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement idElement = menuObject.get("id");
+
+        Integer id = null;
+
+        if ((idElement != null) && idElement.isJsonPrimitive()) {
+            JsonPrimitive idPrimitive = idElement.getAsJsonPrimitive();
+
+            if (idPrimitive.isNumber()) {
+                id = idPrimitive.getAsInt();
+            } //end if
+        } //end if
+
+        return id;
+    } //getId
+
+    private static String getName(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement nameElement = menuObject.get("name");
+
+        String name = null;
+
+        if ((nameElement != null) && nameElement.isJsonPrimitive()) {
+            JsonPrimitive namePrimitive = nameElement.getAsJsonPrimitive();
+
+            if (namePrimitive.isString()) {
+                name = namePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        return name;
+    } //getName
+
+    private static String getDescription(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement descriptionElement = menuObject.get("description");
+
+        String description = null;
+
+        if ((descriptionElement != null) && descriptionElement.isJsonPrimitive()) {
+            JsonPrimitive descriptionPrimitive = descriptionElement.getAsJsonPrimitive();
+
+            if (descriptionPrimitive.isString()) {
+                description = descriptionPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        return description;
+    } //getDescription
+
+    private static Category getCategory(JsonObject categoryObject) {
+        Objects.requireNonNull(categoryObject, "the specified category object is null");
+
+        return null;
+    } //getCategory
+
+    private static List<Category> getCategories(JsonObject menuObject) {
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement categoriesElement = menuObject.get("categories");
+
+        List<Category> categories = null;
+
+        if ((categoriesElement != null) && categoriesElement.isJsonArray()) {
+            JsonArray categoriesArray = categoriesElement.getAsJsonArray();
+
+            categories = new ArrayList<>();
+
+            for (JsonElement categoryElement : categoriesArray) {
+                Category category = null;
+
+                if (categoryElement.isJsonObject()) {
+                    JsonObject categoryObject = categoryElement.getAsJsonObject();
+
+                    category = Test.getCategory(categoryObject);
+                } //end if
+
+                categories.add(category);
+            } //end for
+
+            categories = Collections.unmodifiableList(categories);
+        } //end if
+
+        return categories;
+    } //getCategories
+
     private static TimeAvailability getTimeAvailability(JsonObject timeAvailabilityObject) {
         Objects.requireNonNull(timeAvailabilityObject, "the specified time availability object is null");
 
@@ -368,8 +458,17 @@ public final class Test {
         return new TimeAvailability(open, close);
     } //getTimeAvailability
 
-    private static Availability getAvailability(JsonObject availabilityObject) {
-        Objects.requireNonNull(availabilityObject, "the specified availability object is null");
+    private static Availability getAvailability(JsonObject menuObject) {
+        //TODO: Split up into additional helper methods
+        Objects.requireNonNull(menuObject, "the specified menu object is null");
+
+        JsonElement availabilityElement = menuObject.get("availability");
+
+        if ((availabilityElement == null) || !availabilityElement.isJsonObject()) {
+            return null;
+        } //end if
+
+        JsonObject availabilityObject = availabilityElement.getAsJsonObject();
 
         JsonElement customElement = availabilityObject.get("custom");
 
@@ -446,12 +545,6 @@ public final class Test {
         return new Availability(custom, days, priority, services, time);
     } //getAvailability
 
-    private static Category getCategory(JsonObject categoryObject) {
-        Objects.requireNonNull(categoryObject, "the specified category object is null");
-
-        return null;
-    } //getCategory
-
     private static Image getImage(JsonObject imageObject) {
         Objects.requireNonNull(imageObject, "the specified image object is null");
 
@@ -461,75 +554,15 @@ public final class Test {
     private static Menu getMenu(JsonObject menuObject) {
         Objects.requireNonNull(menuObject, "the specified menu object is null");
 
-        JsonElement idElement = menuObject.get("id");
+        Integer id = Test.getId(menuObject);
 
-        Integer id = null;
+        String name = Test.getName(menuObject);
 
-        if ((idElement != null) && idElement.isJsonPrimitive()) {
-            JsonPrimitive idPrimitive = idElement.getAsJsonPrimitive();
+        String description = Test.getDescription(menuObject);
 
-            if (idPrimitive.isNumber()) {
-                id = idPrimitive.getAsInt();
-            } //end if
-        } //end if
+        List<Category> categories = Test.getCategories(menuObject);
 
-        JsonElement nameElement = menuObject.get("name");
-
-        String name = null;
-
-        if ((nameElement != null) && nameElement.isJsonPrimitive()) {
-            JsonPrimitive namePrimitive = nameElement.getAsJsonPrimitive();
-
-            if (namePrimitive.isString()) {
-                name = namePrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement descriptionElement = menuObject.get("description");
-
-        String description = null;
-
-        if ((descriptionElement != null) && descriptionElement.isJsonPrimitive()) {
-            JsonPrimitive descriptionPrimitive = descriptionElement.getAsJsonPrimitive();
-
-            if (descriptionPrimitive.isString()) {
-                description = descriptionPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement categoriesElement = menuObject.get("categories");
-
-        List<Category> categories = null;
-
-        if ((categoriesElement != null) && categoriesElement.isJsonArray()) {
-            JsonArray categoriesArray = categoriesElement.getAsJsonArray();
-
-            categories = new ArrayList<>();
-
-            for (JsonElement categoryElement : categoriesArray) {
-                Category category = null;
-
-                if (categoryElement.isJsonObject()) {
-                    JsonObject categoryObject = categoryElement.getAsJsonObject();
-
-                    category = Test.getCategory(categoryObject);
-                } //end if
-
-                categories.add(category);
-            } //end for
-
-            categories = Collections.unmodifiableList(categories);
-        } //end if
-
-        JsonElement availabilityElement = menuObject.get("availability");
-
-        Availability availability = null;
-
-        if ((availabilityElement != null) && availabilityElement.isJsonObject()) {
-            JsonObject availabilityObject = availabilityElement.getAsJsonObject();
-
-            availability = Test.getAvailability(availabilityObject);
-        } //end if
+        Availability availability = Test.getAvailability(menuObject);
 
         JsonElement preselectedElement = menuObject.get("default");
 
