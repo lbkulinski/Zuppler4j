@@ -11,6 +11,18 @@
         },
         "categories": [
           {
+            "active": true,
+            "description": "We also offer any of our Sandwiches without bread and option to be served on a bed of lettuce or arugula. Try the Artichoke, Caprese or Tuna for a delicious and unique Salad.",
+            "id": 83768,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774516
@@ -47,18 +59,45 @@
               },
               {
                 "id": 774527
-              },
-              {
-                "id": 795068
               }
             ],
-            "name": "Sandwiches"
+            "minOrderQty": 0,
+            "name": "Sandwiches",
+            "priority": 2,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 85691,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [],
-            "name": "Soups "
+            "minOrderQty": 0,
+            "name": "Soups ",
+            "priority": 3,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83769,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 1482368
@@ -67,9 +106,24 @@
                 "id": 1103691
               }
             ],
-            "name": "Other Delicious Items "
+            "minOrderQty": 0,
+            "name": "Other Delicious Items ",
+            "priority": 4,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83770,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774530
@@ -90,9 +144,24 @@
                 "id": 774537
               }
             ],
-            "name": "Drinks & Chips"
+            "minOrderQty": 0,
+            "name": "Drinks & Chips",
+            "priority": 5,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83771,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774538
@@ -125,9 +194,24 @@
                 "id": 3195733
               }
             ],
-            "name": "Dessert"
+            "minOrderQty": 0,
+            "name": "Dessert",
+            "priority": 6,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83815,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 3178283
@@ -157,7 +241,10 @@
                 "id": 1906047
               }
             ],
-            "name": "Grocery"
+            "minOrderQty": 0,
+            "name": "Grocery",
+            "priority": 7,
+            "tags": null
           }
         ],
         "default": true,
@@ -215,26 +302,83 @@
         },
         "categories": [
           {
+            "active": true,
+            "description": "The Sandwich Platter includes 8 oz. Hot/Mild Giardiniera or Muffuletta Mix. Each tray is suggested for 6-8 people.",
+            "id": 83773,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 789505
               }
             ],
-            "name": "Sandwich Platter"
+            "minOrderQty": 0,
+            "name": "Sandwich Platter",
+            "priority": 1,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "Up to Ten People, Ten to Fifteen People, Sixteen to Twenty People",
+            "id": 83772,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774544
               }
             ],
-            "name": "Antipasti Tray"
+            "minOrderQty": 0,
+            "name": "Antipasti Tray",
+            "priority": 2,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "Price Per Person (24 hour notice, please)",
+            "id": 83774,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [],
-            "name": "Salad "
+            "minOrderQty": 0,
+            "name": "Salad ",
+            "priority": 3,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83776,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774556
@@ -252,9 +396,24 @@
                 "id": 774562
               }
             ],
-            "name": "Desserts"
+            "minOrderQty": 0,
+            "name": "Desserts",
+            "priority": 4,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "our dessert trays require a 24-hour advance notice.",
+            "id": 88869,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 818042
@@ -266,9 +425,24 @@
                 "id": 818041
               }
             ],
-            "name": "Dessert Tray"
+            "minOrderQty": 0,
+            "name": "Dessert Tray",
+            "priority": 5,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 83777,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 774564
@@ -289,15 +463,33 @@
                 "id": 774563
               }
             ],
-            "name": "Drinks and Chips"
+            "minOrderQty": 0,
+            "name": "Drinks and Chips",
+            "priority": 6,
+            "tags": null
           },
           {
+            "active": true,
+            "description": "",
+            "id": 88870,
+            "image": {
+              "active": false,
+              "medium": null,
+              "original": null,
+              "thumb": null,
+              "tiny": null,
+              "xlarge": null,
+              "xxlarge": null
+            },
             "items": [
               {
                 "id": 818044
               }
             ],
-            "name": "Utensils & Plates"
+            "minOrderQty": 0,
+            "name": "Utensils & Plates",
+            "priority": 7,
+            "tags": null
           }
         ],
         "default": false,

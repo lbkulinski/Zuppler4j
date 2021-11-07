@@ -268,10 +268,25 @@ public final class Test {
                                    }
                                }
                                categories {
-                                   name
+                                   active
+                                   description
+                                   id
+                                   image {
+                                       active
+                                       medium
+                                       original
+                                       thumb
+                                       tiny
+                                       xlarge
+                                       xxlarge
+                                   }
                                    items {
                                        id
                                    }
+                                   minOrderQty
+                                   name
+                                   priority
+                                   tags
                                }
                                default
                                group
