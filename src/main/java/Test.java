@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Path;
 import java.util.*;
 
 public final class Test {
@@ -825,6 +824,8 @@ public final class Test {
         Test.getMenus(menusJson)
             .stream()
             .map(Menu::categories)
-            .forEach(categories -> categories.forEach(System.out::println));
+            .forEach(categories -> categories.stream()
+                                             .map(Category::image)
+                                             .forEach(System.out::println));
     } //main
 }
