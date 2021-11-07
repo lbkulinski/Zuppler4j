@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Path;
 import java.util.*;
 
 public final class Test {
@@ -392,10 +393,162 @@ public final class Test {
         return description;
     } //getDescription
 
+    private static Image getImage(JsonObject jsonObject) {
+        Objects.requireNonNull(jsonObject, "the specified JSON object is null");
+
+        JsonElement imageElement = jsonObject.get("image");
+
+        if ((imageElement == null) || !imageElement.isJsonObject()) {
+            return null;
+        } //end if
+
+        JsonObject imageObject = imageElement.getAsJsonObject();
+
+        JsonElement activeElement = imageObject.get("active");
+
+        Boolean active = null;
+
+        if ((activeElement != null) && activeElement.isJsonPrimitive()) {
+            JsonPrimitive activePrimitive = activeElement.getAsJsonPrimitive();
+
+            if (activePrimitive.isBoolean()) {
+                active = activePrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        JsonElement mediumElement = imageObject.get("medium");
+
+        String medium = null;
+
+        if ((mediumElement != null) && mediumElement.isJsonPrimitive()) {
+            JsonPrimitive mediumPrimitive = mediumElement.getAsJsonPrimitive();
+
+            if (mediumPrimitive.isString()) {
+                medium = mediumPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement originalElement = imageObject.get("original");
+
+        String original = null;
+
+        if ((originalElement != null) && originalElement.isJsonPrimitive()) {
+            JsonPrimitive originalPrimitive = originalElement.getAsJsonPrimitive();
+
+            if (originalPrimitive.isString()) {
+                original = originalPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement thumbElement = imageObject.get("thumb");
+
+        String thumb = null;
+
+        if ((thumbElement != null) && thumbElement.isJsonPrimitive()) {
+            JsonPrimitive thumbPrimitive = thumbElement.getAsJsonPrimitive();
+
+            if (thumbPrimitive.isString()) {
+                thumb = thumbPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement tinyElement = imageObject.get("tiny");
+
+        String tiny = null;
+
+        if ((tinyElement != null) && tinyElement.isJsonPrimitive()) {
+            JsonPrimitive tinyPrimitive = tinyElement.getAsJsonPrimitive();
+
+            if (tinyPrimitive.isString()) {
+                tiny = tinyPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement xlargeElement = imageObject.get("xlarge");
+
+        String xlarge = null;
+
+        if ((xlargeElement != null) && xlargeElement.isJsonPrimitive()) {
+            JsonPrimitive xlargePrimitive = xlargeElement.getAsJsonPrimitive();
+
+            if (xlargePrimitive.isString()) {
+                xlarge = xlargePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement xxlargeElement = imageObject.get("xxlarge");
+
+        String xxlarge = null;
+
+        if ((xxlargeElement != null) && xxlargeElement.isJsonPrimitive()) {
+            JsonPrimitive xxlargePrimitive = xxlargeElement.getAsJsonPrimitive();
+
+            if (xxlargePrimitive.isString()) {
+                xxlarge = xxlargePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        return new Image(active, medium, original, thumb, tiny, xlarge, xxlarge);
+    } //getImage
+
     private static Category getCategory(JsonObject categoryObject) {
         Objects.requireNonNull(categoryObject, "the specified category object is null");
 
-        return null;
+        JsonElement idElement = categoryObject.get("id");
+
+        Integer id = null;
+
+        if ((idElement != null) && idElement.isJsonPrimitive()) {
+            JsonPrimitive idPrimitive = idElement.getAsJsonPrimitive();
+
+            if (idPrimitive.isNumber()) {
+                id = idPrimitive.getAsInt();
+            } //end if
+        } //end if
+
+        JsonElement nameElement = categoryObject.get("name");
+
+        String name = null;
+
+        if ((nameElement != null) && nameElement.isJsonPrimitive()) {
+            JsonPrimitive namePrimitive = nameElement.getAsJsonPrimitive();
+
+            if (namePrimitive.isString()) {
+                name = namePrimitive.getAsString();
+            } //end if
+        } //end if
+
+        JsonElement descriptionElement = categoryObject.get("description");
+
+        String description = null;
+
+        if ((descriptionElement != null) && descriptionElement.isJsonPrimitive()) {
+            JsonPrimitive descriptionPrimitive = descriptionElement.getAsJsonPrimitive();
+
+            if (descriptionPrimitive.isString()) {
+                description = descriptionPrimitive.getAsString();
+            } //end if
+        } //end if
+
+        //TODO: parse the "items" member
+
+        JsonElement activeElement = categoryObject.get("active");
+
+        Boolean active = null;
+
+        if ((activeElement != null) && activeElement.isJsonPrimitive()) {
+            JsonPrimitive activePrimitive = activeElement.getAsJsonPrimitive();
+
+            if (activePrimitive.isBoolean()) {
+                active = activePrimitive.getAsBoolean();
+            } //end if
+        } //end if
+
+        //
+
+        Image image = Test.getImage(categoryObject);
+
+        return new Category(id, name, description, null, active, image, null, null, null);
     } //getCategory
 
     private static List<Category> getCategories(JsonObject menuObject) {
@@ -459,7 +612,6 @@ public final class Test {
     } //getTimeAvailability
 
     private static Availability getAvailability(JsonObject menuObject) {
-        //TODO: Split up into additional helper methods
         Objects.requireNonNull(menuObject, "the specified menu object is null");
 
         JsonElement availabilityElement = menuObject.get("availability");
@@ -581,106 +733,6 @@ public final class Test {
         return group;
     } //getGroup
 
-    private static Image getImage(JsonObject menuObject) {
-        Objects.requireNonNull(menuObject, "the specified menu object is null");
-
-        JsonElement imageElement = menuObject.get("image");
-
-        if ((imageElement == null) || !imageElement.isJsonObject()) {
-            return null;
-        } //end if
-
-        JsonObject imageObject = imageElement.getAsJsonObject();
-
-        JsonElement activeElement = imageObject.get("active");
-
-        Boolean active = null;
-
-        if ((activeElement != null) && activeElement.isJsonPrimitive()) {
-            JsonPrimitive activePrimitive = activeElement.getAsJsonPrimitive();
-
-            if (activePrimitive.isBoolean()) {
-                active = activePrimitive.getAsBoolean();
-            } //end if
-        } //end if
-
-        JsonElement mediumElement = imageObject.get("medium");
-
-        String medium = null;
-
-        if ((mediumElement != null) && mediumElement.isJsonPrimitive()) {
-            JsonPrimitive mediumPrimitive = mediumElement.getAsJsonPrimitive();
-
-            if (mediumPrimitive.isString()) {
-                medium = mediumPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement originalElement = imageObject.get("original");
-
-        String original = null;
-
-        if ((originalElement != null) && originalElement.isJsonPrimitive()) {
-            JsonPrimitive originalPrimitive = originalElement.getAsJsonPrimitive();
-
-            if (originalPrimitive.isString()) {
-                original = originalPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement thumbElement = imageObject.get("thumb");
-
-        String thumb = null;
-
-        if ((thumbElement != null) && thumbElement.isJsonPrimitive()) {
-            JsonPrimitive thumbPrimitive = thumbElement.getAsJsonPrimitive();
-
-            if (thumbPrimitive.isString()) {
-                thumb = thumbPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement tinyElement = imageObject.get("tiny");
-
-        String tiny = null;
-
-        if ((tinyElement != null) && tinyElement.isJsonPrimitive()) {
-            JsonPrimitive tinyPrimitive = tinyElement.getAsJsonPrimitive();
-
-            if (tinyPrimitive.isString()) {
-                tiny = tinyPrimitive.getAsString();
-            } //end if
-        } //end if
-
-        JsonElement xlargeElement = imageObject.get("xlarge");
-
-        String xlarge = null;
-
-        if ((xlargeElement != null) && xlargeElement.isJsonPrimitive()) {
-            JsonPrimitive xlargePrimitive = xlargeElement.getAsJsonPrimitive();
-
-            if (xlargePrimitive.isString()) {
-                xlarge = xlargePrimitive.getAsString();
-            } //end if
-        } //end if
-
-        //
-
-        JsonElement xxlargeElement = imageObject.get("xxlarge");
-
-        String xxlarge = null;
-
-        if ((xxlargeElement != null) && xxlargeElement.isJsonPrimitive()) {
-            JsonPrimitive xxlargePrimitive = xxlargeElement.getAsJsonPrimitive();
-
-            if (xxlargePrimitive.isString()) {
-                xxlarge = xxlargePrimitive.getAsString();
-            } //end if
-        } //end if
-
-        return new Image(active, medium, original, thumb, tiny, xlarge, xxlarge);
-    } //getImage
-
     private static Boolean getUseCategoryTabs(JsonObject menuObject) {
         Objects.requireNonNull(menuObject, "the specified menu object is null");
 
@@ -771,6 +823,8 @@ public final class Test {
         String menusJson = Test.getMenusJson();
 
         Test.getMenus(menusJson)
-            .forEach(System.out::println);
+            .stream()
+            .map(Menu::categories)
+            .forEach(categories -> categories.forEach(System.out::println));
     } //main
 }
