@@ -543,11 +543,33 @@ public final class Test {
             } //end if
         } //end if
 
-        //
-
         Image image = Test.getImage(categoryObject);
 
-        return new Category(id, name, description, null, active, image, null, null, null);
+        JsonElement minOrderQtyElement = categoryObject.get("minOrderQty");
+
+        Integer minOrderQty = null;
+
+        if ((minOrderQtyElement != null) && minOrderQtyElement.isJsonPrimitive()) {
+            JsonPrimitive minOrderQtyPrimitive = minOrderQtyElement.getAsJsonPrimitive();
+
+            if (minOrderQtyPrimitive.isNumber()) {
+                minOrderQty = minOrderQtyPrimitive.getAsInt();
+            } //end if
+        } //end if
+
+        JsonElement priorityElement = categoryObject.get("priority");
+
+        Integer priority = null;
+
+        if ((priorityElement != null) && priorityElement.isJsonPrimitive()) {
+            JsonPrimitive priorityPrimitive = priorityElement.getAsJsonPrimitive();
+
+            if (priorityPrimitive.isNumber()) {
+                priority = priorityPrimitive.getAsInt();
+            } //end if
+        } //end if
+
+        return new Category(id, name, description, null, active, image, minOrderQty, priority, null);
     } //getCategory
 
     private static List<Category> getCategories(JsonObject menuObject) {
@@ -825,7 +847,7 @@ public final class Test {
             .stream()
             .map(Menu::categories)
             .forEach(categories -> categories.stream()
-                                             .map(Category::image)
+                                             .map(Category::priority)
                                              .forEach(System.out::println));
     } //main
 }
