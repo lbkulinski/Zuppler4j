@@ -60,7 +60,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
      * Deserializes an {@link Image} object using the specified {@link JsonReader}.
      *
      * @param jsonReader the {@link JsonReader} to be used in the operation
-     * @return the deserialzed {@link Image} object
+     * @return the deserialized {@link Image} object
      * @throws IOException if an I/O error occurs
      */
     @Override
