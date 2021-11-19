@@ -1,16 +1,26 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+package com.zuppler4j.adapters;
+
 import com.google.gson.TypeAdapter;
-import com.google.gson.reflect.TypeToken;
+import com.zuppler4j.Image;
+import com.google.gson.stream.JsonWriter;
+import java.io.IOException;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-import com.zuppler4j.Image;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-
+/**
+ * A type adapter for the {@link Image} class.
+ *
+ * @author Logan Kulinski, lbkulinski@icloud.com
+ * @version November 19, 2021
+ */
 public final class ImageTypeAdapter extends TypeAdapter<Image> {
+    /**
+     * Serializes the specified {@link Image} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param image the {@link Image} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public void write(JsonWriter jsonWriter, Image image) throws IOException {
         jsonWriter.beginObject();
@@ -46,6 +56,13 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
         jsonWriter.endObject();
     } //write
 
+    /**
+     * Deserializes an {@link Image} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialzed {@link Image} object
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     public Image read(JsonReader jsonReader) throws IOException {
         Boolean active = null;
@@ -90,35 +107,4 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
 
         return new Image(active, medium, original, thumb, tiny, xlarge, xxlarge);
     } //read
-
-    public static void main(String[] args) {
-        TypeToken<Image> imageTypeToken = new TypeToken<>() {};
-
-        Type imageType = imageTypeToken.getType();
-
-        ImageTypeAdapter imageTypeAdapter = new ImageTypeAdapter();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-
-        Gson gson = gsonBuilder.registerTypeAdapter(imageType, imageTypeAdapter)
-                               .serializeNulls()
-                               .create();
-
-        String json = """
-                      {
-                          "active": false,
-                          "medium": "test",
-                          "original": null,
-                          "thumb": null,
-                          "tiny": null,
-                          "xlarge": null,
-                          "xxlarge": null
-                      }""";
-
-        Image image = gson.fromJson(json, imageType);
-
-        System.out.println(image);
-
-        System.out.println(gson.toJson(image));
-    }
 }
