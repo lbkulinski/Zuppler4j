@@ -1,9 +1,8 @@
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.*;
 import com.zuppler4j.Image;
-import java.lang.reflect.Type;
+import com.zuppler4j.TimeAvailability;
 import com.zuppler4j.adapters.ImageTypeAdapter;
-import com.google.gson.GsonBuilder;
-import com.google.gson.Gson;
+import com.zuppler4j.adapters.TimeAvailabilityAdapter;
 
 /**
  * A test class for the Zuppler4j API.
@@ -18,33 +17,36 @@ public final class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TypeToken<Image> imageTypeToken = new TypeToken<>() {};
-
-        Type imageType = imageTypeToken.getType();
-
         ImageTypeAdapter imageTypeAdapter = new ImageTypeAdapter();
+
+        TimeAvailabilityAdapter timeAvailabilityAdapter = new TimeAvailabilityAdapter();
 
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = gsonBuilder.registerTypeAdapter(imageType, imageTypeAdapter)
+        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, imageTypeAdapter)
+                               .registerTypeAdapter(TimeAvailability.class, timeAvailabilityAdapter)
                                .serializeNulls()
                                .create();
 
         String json = """
-                      {
-                          "active": false,
-                          "medium": null,
-                          "original": null,
-                          "thumb": null,
-                          "tiny": null,
-                          "xlarge": null,
-                          "xxlarge": null
-                      }""";
+                      [
+                          {
+                              "active": false,
+                              "medium": null,
+                              "original": null,
+                              "thumb": null,
+                              "tiny": null,
+                              "xlarge": null,
+                              "xxlarge": null
+                          },
+                          {
+                              "open": 1,
+                              "close": 2
+                          }
+                      ]""";
 
-        Image image = gson.fromJson(json, imageType);
+        JsonElement jsonElement = gson.fromJson(json, JsonArray.class);
 
-        System.out.println(image);
-
-        System.out.println(gson.toJson(image));
+        System.out.println(jsonElement.toString());
     } //main
 }
