@@ -14,7 +14,22 @@ import com.google.gson.stream.JsonToken;
  * @author Logan Kulinski, lbkulinski@icloud.com
  * @version November 20, 2021
  */
-public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability> {
+public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailability> {
+    /**
+     * Constructs an instance of the {@link TimeAvailabilityTypeAdapter} class.
+     */
+    private TimeAvailabilityTypeAdapter() {
+    } //TimeAvailabilityTypeAdapter
+
+    /**
+     * Returns an instance of the {@link TimeAvailabilityTypeAdapter} class.
+     *
+     * @return an instance of the {@link TimeAvailabilityTypeAdapter} class
+     */
+    public static TimeAvailabilityTypeAdapter create() {
+        return new TimeAvailabilityTypeAdapter();
+    } //create
+
     /**
      * Serializes the specified {@link TimeAvailability} using the specified {@link JsonWriter}.
      *
@@ -89,7 +104,7 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
      */
     @Override
     public void write(JsonWriter jsonWriter, TimeAvailability timeAvailability) throws IOException {
-        TimeAvailabilityAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+        TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
     } //write
 
     /**
@@ -102,6 +117,6 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
      */
     @Override
     public TimeAvailability read(JsonReader jsonReader) throws IOException {
-        return TimeAvailabilityAdapter.readTimeAvailability(jsonReader);
+        return TimeAvailabilityTypeAdapter.readTimeAvailability(jsonReader);
     } //read
 }

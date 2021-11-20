@@ -8,7 +8,7 @@ import com.zuppler4j.Image;
  * @apiNote The Zuppler GraphQL {@code ItemOption} object has a {@code default} field. It has been renamed to
  * {@code preselected} in Zuppler4j, as {@code default} is a keyword.
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 6, 2021
+ * @version November 20, 2021
  * @param id the ID of this item option
  * @param name the name of this item option
  * @param price the price of this item option
@@ -23,7 +23,7 @@ import com.zuppler4j.Image;
  * @param priority the priority of this item option
  * @param weight the weight of this item option
  */
-public record ItemOption(Integer id, String name, Float price, Boolean active, Boolean preselected, String description,
-                         Integer dishId, String group, String groupLabel, Image image, Boolean pricedIn,
-                         Integer priority, Integer weight) {
+public record ItemOption(Integer id, String name, Double price, Boolean active, Boolean preselected,
+                         String description, Integer dishId, String group, String groupLabel, Image image,
+                         Boolean pricedIn, Integer priority, Integer weight) {
 }

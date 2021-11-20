@@ -2,9 +2,11 @@ import com.google.gson.*;
 import com.zuppler4j.Availability;
 import com.zuppler4j.Image;
 import com.zuppler4j.TimeAvailability;
-import com.zuppler4j.adapters.AvailabilityAdapter;
+import com.zuppler4j.adapters.AvailabilityTypeAdapter;
 import com.zuppler4j.adapters.ImageTypeAdapter;
-import com.zuppler4j.adapters.TimeAvailabilityAdapter;
+import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
+import com.zuppler4j.adapters.menu.ItemOptionTypeAdapter;
+import com.zuppler4j.menu.ItemOption;
 
 /**
  * A test class for the Zuppler4j API.
@@ -19,17 +21,12 @@ public final class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ImageTypeAdapter imageTypeAdapter = new ImageTypeAdapter();
-
-        TimeAvailabilityAdapter timeAvailabilityAdapter = new TimeAvailabilityAdapter();
-
-        AvailabilityAdapter availabilityAdapter = new AvailabilityAdapter();
-
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, imageTypeAdapter)
-                               .registerTypeAdapter(TimeAvailability.class, timeAvailabilityAdapter)
-                               .registerTypeAdapter(Availability.class, availabilityAdapter)
+        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, ImageTypeAdapter.create())
+                               .registerTypeAdapter(TimeAvailability.class, TimeAvailabilityTypeAdapter.create())
+                               .registerTypeAdapter(Availability.class, AvailabilityTypeAdapter.create())
+                               .registerTypeAdapter(ItemOption.class, ItemOptionTypeAdapter.create())
                                .serializeNulls()
                                .create();
 
