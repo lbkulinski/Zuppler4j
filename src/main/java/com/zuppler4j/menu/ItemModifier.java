@@ -8,14 +8,14 @@ import java.util.Collections;
  * An item modifier of the Zuppler API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 7, 2021
+ * @version November 20, 2021
  * @param id the ID of this item modifier
  * @param name the name of this item modifier
  * @param description the description of this item modifier
  * @param options the {@code List} of {@code ItemOption}s of this item modifier
  * @param active the active flag of this item modifier
  * @param allowGrouping the flag to allow grouping of this item modifier
- * @param dependsOn the {@code List} of dependents of this item modifier
+ * @param dependsOn the {@code List} of dependencies of this item modifier
  * @param divider the divider of this item modifier
  * @param masterModifierId the master modifier ID of this item modifier
  * @param minSelections the minimum selections of this item modifier
@@ -38,7 +38,7 @@ public record ItemModifier(Integer id, String name, String description, List<Ite
      * @param options the {@code List} of {@code ItemOption}s to be used in construction
      * @param active the active flag to be used in construction
      * @param allowGrouping the flag to allow grouping to be used in construction
-     * @param dependsOn the {@code List} of dependents to be used in construction
+     * @param dependsOn the {@code List} of dependencies to be used in construction
      * @param divider the divider to be used in construction
      * @param masterModifierId the master modifier ID to be used in construction
      * @param minSelections the minimum selections to be used in construction
