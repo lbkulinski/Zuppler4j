@@ -1,6 +1,8 @@
 import com.google.gson.*;
+import com.zuppler4j.Availability;
 import com.zuppler4j.Image;
 import com.zuppler4j.TimeAvailability;
+import com.zuppler4j.adapters.AvailabilityAdapter;
 import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.zuppler4j.adapters.TimeAvailabilityAdapter;
 
@@ -21,32 +23,56 @@ public final class Test {
 
         TimeAvailabilityAdapter timeAvailabilityAdapter = new TimeAvailabilityAdapter();
 
+        AvailabilityAdapter availabilityAdapter = new AvailabilityAdapter();
+
         GsonBuilder gsonBuilder = new GsonBuilder();
 
         Gson gson = gsonBuilder.registerTypeAdapter(Image.class, imageTypeAdapter)
                                .registerTypeAdapter(TimeAvailability.class, timeAvailabilityAdapter)
+                               .registerTypeAdapter(Availability.class, availabilityAdapter)
                                .serializeNulls()
                                .create();
 
         String json = """
-                      [
-                          {
-                              "active": false,
-                              "medium": null,
-                              "original": null,
-                              "thumb": null,
-                              "tiny": null,
-                              "xlarge": null,
-                              "xxlarge": null
-                          },
-                          {
-                              "open": 1,
-                              "close": 2
-                          }
-                      ]""";
+                      {
+                          "custom": false,
+                          "days": 0,
+                          "priority": 1,
+                          "services": 15,
+                          "time": [
+                              {
+                                  "close": 0,
+                                  "open": 0
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              },
+                              {
+                                  "close": 540,
+                                  "open": 540
+                              }
+                          ]
+                      }""";
 
-        JsonElement jsonElement = gson.fromJson(json, JsonArray.class);
+        Availability availability = gson.fromJson(json, Availability.class);
 
-        System.out.println(jsonElement.toString());
+        System.out.println(availability);
     } //main
 }
