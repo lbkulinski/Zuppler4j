@@ -17,7 +17,22 @@ import java.util.ArrayList;
  * @author Logan Kulinski, lbkulinski@icloud.com
  * @version November 20, 2021
  */
-public final class AvailabilityAdapter extends TypeAdapter<Availability> {
+public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
+    /**
+     * Constructs an instance of the {@link AvailabilityTypeAdapter} class.
+     */
+    private AvailabilityTypeAdapter() {
+    } //AvailabilityTypeAdapter
+
+    /**
+     * Returns an instance of the {@link AvailabilityTypeAdapter} class.
+     * 
+     * @return an instance of the {@link AvailabilityTypeAdapter} class
+     */
+    public static AvailabilityTypeAdapter create() {
+        return new AvailabilityTypeAdapter();
+    } //create
+
     /**
      * Serializes the specified {@link Availability} using the specified {@link JsonWriter}.
      *
@@ -54,7 +69,7 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
         jsonWriter.beginArray();
 
         for (TimeAvailability timeAvailability : availability.time()) {
-            TimeAvailabilityAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+            TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
         } //end for
 
         jsonWriter.endArray();
@@ -105,7 +120,7 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
                     jsonReader.beginArray();
 
                     while (jsonReader.hasNext()) {
-                        TimeAvailability timeAvailability = TimeAvailabilityAdapter.readTimeAvailability(jsonReader);
+                        TimeAvailability timeAvailability = TimeAvailabilityTypeAdapter.readTimeAvailability(jsonReader);
 
                         time.add(timeAvailability);
                     } //end while
@@ -130,7 +145,7 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
      */
     @Override
     public void write(JsonWriter jsonWriter, Availability availability) throws IOException {
-        AvailabilityAdapter.writeAvailability(jsonWriter, availability);
+        AvailabilityTypeAdapter.writeAvailability(jsonWriter, availability);
     } //write
 
     /**
@@ -143,6 +158,6 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
      */
     @Override
     public Availability read(JsonReader jsonReader) throws IOException {
-        return AvailabilityAdapter.readAvailability(jsonReader);
+        return AvailabilityTypeAdapter.readAvailability(jsonReader);
     } //read
 }

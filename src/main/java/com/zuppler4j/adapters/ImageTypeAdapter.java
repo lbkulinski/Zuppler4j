@@ -16,6 +16,21 @@ import com.google.gson.stream.JsonToken;
  */
 public final class ImageTypeAdapter extends TypeAdapter<Image> {
     /**
+     * Constructs an instance of the {@link ImageTypeAdapter} class.
+     */
+    private ImageTypeAdapter() {
+    } //ImageTypeAdapter
+
+    /**
+     * Returns an instance of the {@link ImageTypeAdapter} class.
+     *
+     * @return an instance of the {@link ImageTypeAdapter} class
+     */
+    public static ImageTypeAdapter create() {
+        return new ImageTypeAdapter();
+    } //create
+
+    /**
      * Serializes the specified {@link Image} using the specified {@link JsonWriter}.
      *
      * @param jsonWriter the {@link JsonWriter} to be used in the operation
