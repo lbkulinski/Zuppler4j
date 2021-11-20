@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.Objects;
 import com.google.gson.stream.JsonReader;
 import com.zuppler4j.TimeAvailability;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A type adapter for the {@link Availability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 19, 2021
+ * @version November 20, 2021
  */
 public final class AvailabilityAdapter extends TypeAdapter<Availability> {
     /**
@@ -24,8 +26,7 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonWriter} or {@link Availability} is {@code null}
      */
-    @Override
-    public void write(JsonWriter jsonWriter, Availability availability) throws IOException {
+    public static void writeAvailability(JsonWriter jsonWriter, Availability availability) throws IOException {
         Objects.requireNonNull(jsonWriter, "the specified JsonWriter is null");
 
         Objects.requireNonNull(availability, "the specified Availability is null");
@@ -53,23 +54,13 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
         jsonWriter.beginArray();
 
         for (TimeAvailability timeAvailability : availability.time()) {
-            jsonWriter.beginObject();
-
-            jsonWriter.name("open");
-
-            jsonWriter.value(timeAvailability.open());
-
-            jsonWriter.name("close");
-
-            jsonWriter.value(timeAvailability.close());
-
-            jsonWriter.endObject();
+            TimeAvailabilityAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
         } //end for
 
         jsonWriter.endArray();
 
         jsonWriter.endObject();
-    } //write
+    } //writeAvailability
 
     /**
      * Deserializes an {@link Availability} object using the specified {@link JsonReader}.
@@ -79,11 +70,8 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
      */
-    @Override
-    public Availability read(JsonReader jsonReader) throws IOException {
+    public static Availability readAvailability(JsonReader jsonReader) throws IOException {
         Objects.requireNonNull(jsonReader, "the specified JsonReader is null");
-
-        jsonReader.beginObject();
 
         Boolean custom = null;
 
@@ -92,6 +80,10 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
         Integer priority = null;
 
         Integer services = null;
+
+        List<TimeAvailability> time = null;
+
+        jsonReader.beginObject();
 
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
@@ -107,12 +99,50 @@ public final class AvailabilityAdapter extends TypeAdapter<Availability> {
                 case "days" -> days = jsonReader.nextInt();
                 case "priority" -> priority = jsonReader.nextInt();
                 case "services" -> services = jsonReader.nextInt();
-                //TODO: case "time"
+                case "time" -> {
+                    time = new ArrayList<>();
+
+                    jsonReader.beginArray();
+
+                    while (jsonReader.hasNext()) {
+                        TimeAvailability timeAvailability = TimeAvailabilityAdapter.readTimeAvailability(jsonReader);
+
+                        time.add(timeAvailability);
+                    } //end while
+
+                    jsonReader.endArray();
+                } //case "time"
             } //end switch
         } //end while
 
         jsonReader.endObject();
 
-        return null;
+        return new Availability(custom, days, priority, services, time);
+    } //readAvailability
+
+    /**
+     * Serializes the specified {@link Availability} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param availability the {@link Availability} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonWriter} or {@link Availability} is {@code null}
+     */
+    @Override
+    public void write(JsonWriter jsonWriter, Availability availability) throws IOException {
+        AvailabilityAdapter.writeAvailability(jsonWriter, availability);
+    } //write
+
+    /**
+     * Deserializes an {@link Availability} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialized {@link Availability} object
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
+     */
+    @Override
+    public Availability read(JsonReader jsonReader) throws IOException {
+        return AvailabilityAdapter.readAvailability(jsonReader);
     } //read
 }

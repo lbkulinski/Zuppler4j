@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link Image} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 19, 2021
+ * @version November 20, 2021
  */
 public final class ImageTypeAdapter extends TypeAdapter<Image> {
     /**
@@ -23,8 +23,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonWriter} or {@link Image} is {@code null}
      */
-    @Override
-    public void write(JsonWriter jsonWriter, Image image) throws IOException {
+    public static void writeImage(JsonWriter jsonWriter, Image image) throws IOException {
         Objects.requireNonNull(jsonWriter, "the specified JsonWriter is null");
 
         Objects.requireNonNull(image, "the specified Image is null");
@@ -60,7 +59,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
         jsonWriter.value(image.xxlarge());
 
         jsonWriter.endObject();
-    } //write
+    } //writeImage
 
     /**
      * Deserializes an {@link Image} object using the specified {@link JsonReader}.
@@ -70,8 +69,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
      */
-    @Override
-    public Image read(JsonReader jsonReader) throws IOException {
+    public static Image readImage(JsonReader jsonReader) throws IOException {
         Objects.requireNonNull(jsonReader, "the specified JsonReader is null");
 
         Boolean active = null;
@@ -115,5 +113,31 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
         jsonReader.endObject();
 
         return new Image(active, medium, original, thumb, tiny, xlarge, xxlarge);
+    } //readImage
+
+    /**
+     * Serializes the specified {@link Image} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param image the {@link Image} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonWriter} or {@link Image} is {@code null}
+     */
+    @Override
+    public void write(JsonWriter jsonWriter, Image image) throws IOException {
+        ImageTypeAdapter.writeImage(jsonWriter, image);
+    } //write
+
+    /**
+     * Deserializes an {@link Image} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialized {@link Image} object
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
+     */
+    @Override
+    public Image read(JsonReader jsonReader) throws IOException {
+        return ImageTypeAdapter.readImage(jsonReader);
     } //read
 }

@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link TimeAvailability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 19, 2021
+ * @version November 20, 2021
  */
 public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability> {
     /**
@@ -23,8 +23,8 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonWriter} or {@link TimeAvailability} is {@code null}
      */
-    @Override
-    public void write(JsonWriter jsonWriter, TimeAvailability timeAvailability) throws IOException {
+    public static void writeTimeAvailability(JsonWriter jsonWriter,
+                                             TimeAvailability timeAvailability) throws IOException {
         Objects.requireNonNull(jsonWriter, "the specified JsonWriter is null");
 
         Objects.requireNonNull(timeAvailability, "the specified TimeAvailability is null");
@@ -40,7 +40,7 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
         jsonWriter.value(timeAvailability.close());
 
         jsonWriter.endObject();
-    } //write
+    } //writeTimeAvailability
 
     /**
      * Deserializes an {@link TimeAvailability} object using the specified {@link JsonReader}.
@@ -50,15 +50,14 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
      * @throws IOException if an I/O error occurs
      * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
      */
-    @Override
-    public TimeAvailability read(JsonReader jsonReader) throws IOException {
+    public static TimeAvailability readTimeAvailability(JsonReader jsonReader) throws IOException {
         Objects.requireNonNull(jsonReader, "the specified JsonReader is null");
-
-        jsonReader.beginObject();
 
         Integer open = null;
 
         Integer close = null;
+
+        jsonReader.beginObject();
 
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
@@ -78,5 +77,31 @@ public final class TimeAvailabilityAdapter extends TypeAdapter<TimeAvailability>
         jsonReader.endObject();
 
         return new TimeAvailability(open, close);
+    } //readTimeAvailability
+
+    /**
+     * Serializes the specified {@link TimeAvailability} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param timeAvailability the {@link TimeAvailability} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonWriter} or {@link TimeAvailability} is {@code null}
+     */
+    @Override
+    public void write(JsonWriter jsonWriter, TimeAvailability timeAvailability) throws IOException {
+        TimeAvailabilityAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+    } //write
+
+    /**
+     * Deserializes an {@link TimeAvailability} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialized {@link TimeAvailability} object
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
+     */
+    @Override
+    public TimeAvailability read(JsonReader jsonReader) throws IOException {
+        return TimeAvailabilityAdapter.readTimeAvailability(jsonReader);
     } //read
 }
