@@ -68,9 +68,7 @@ public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailabil
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
 
-            JsonToken token = jsonReader.peek();
-
-            if (token == JsonToken.NULL) {
+            if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
 
                 continue;

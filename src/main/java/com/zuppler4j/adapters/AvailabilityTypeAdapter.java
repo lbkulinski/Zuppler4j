@@ -98,9 +98,7 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
 
-            JsonToken token = jsonReader.peek();
-
-            if (token == JsonToken.NULL) {
+            if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
 
                 continue;
@@ -117,11 +115,9 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
                     jsonReader.beginArray();
 
                     while (jsonReader.hasNext()) {
-                        token = jsonReader.peek();
-
                         TimeAvailability timeAvailability;
 
-                        if (token == JsonToken.NULL) {
+                        if (jsonReader.peek() == JsonToken.NULL) {
                             jsonReader.nextNull();
 
                             timeAvailability = null;

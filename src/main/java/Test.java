@@ -5,7 +5,9 @@ import com.zuppler4j.TimeAvailability;
 import com.zuppler4j.adapters.AvailabilityTypeAdapter;
 import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
+import com.zuppler4j.adapters.menu.ItemModifierTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemOptionTypeAdapter;
+import com.zuppler4j.menu.ItemModifier;
 import com.zuppler4j.menu.ItemOption;
 
 /**
@@ -21,20 +23,13 @@ public final class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ImageTypeAdapter imageTypeAdapter = new ImageTypeAdapter();
-
-        TimeAvailabilityTypeAdapter timeAvailabilityTypeAdapter = new TimeAvailabilityTypeAdapter();
-
-        AvailabilityTypeAdapter availabilityTypeAdapter = new AvailabilityTypeAdapter();
-
-        ItemOptionTypeAdapter itemOptionTypeAdapter = new ItemOptionTypeAdapter();
-
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, imageTypeAdapter)
-                               .registerTypeAdapter(TimeAvailability.class, timeAvailabilityTypeAdapter)
-                               .registerTypeAdapter(Availability.class, availabilityTypeAdapter)
-                               .registerTypeAdapter(ItemOption.class, itemOptionTypeAdapter)
+        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, new ImageTypeAdapter())
+                               .registerTypeAdapter(TimeAvailability.class, new TimeAvailabilityTypeAdapter())
+                               .registerTypeAdapter(Availability.class, new AvailabilityTypeAdapter())
+                               .registerTypeAdapter(ItemOption.class, new ItemOptionTypeAdapter())
+                               .registerTypeAdapter(ItemModifier.class, new ItemModifierTypeAdapter())
                                .serializeNulls()
                                .create();
 
