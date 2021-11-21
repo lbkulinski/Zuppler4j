@@ -14,23 +14,14 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link ItemOption} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
+ * @version November 21, 2021
  */
 public final class ItemOptionTypeAdapter extends TypeAdapter<ItemOption> {
     /**
      * Constructs a new instance of the {@link ItemOptionTypeAdapter} class.
      */
-    private ItemOptionTypeAdapter() {
+    public ItemOptionTypeAdapter() {
     } //ItemOptionTypeAdapter
-
-    /**
-     * Returns an instance of the {@link ItemOptionTypeAdapter} class.
-     *
-     * @return an instance of the {@link ItemOptionTypeAdapter} class
-     */
-    public static ItemOptionTypeAdapter create() {
-        return new ItemOptionTypeAdapter();
-    } //create
     
     /**
      * Serializes the specified {@link ItemOption} using the specified {@link JsonWriter}.
@@ -85,7 +76,13 @@ public final class ItemOptionTypeAdapter extends TypeAdapter<ItemOption> {
 
         jsonWriter.name("image");
 
-        ImageTypeAdapter.writeImage(jsonWriter, itemOption.image());
+        Image image = itemOption.image();
+
+        if (image == null) {
+            jsonWriter.nullValue();
+        } else {
+            ImageTypeAdapter.writeImage(jsonWriter, itemOption.image());
+        } //end if
 
         jsonWriter.name("pricedIn");
 
@@ -147,6 +144,8 @@ public final class ItemOptionTypeAdapter extends TypeAdapter<ItemOption> {
             JsonToken token = jsonReader.peek();
 
             if (token == JsonToken.NULL) {
+                jsonReader.nextNull();
+
                 continue;
             } //end if
 

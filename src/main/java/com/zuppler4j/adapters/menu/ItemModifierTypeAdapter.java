@@ -15,23 +15,14 @@ import java.util.List;
  * A type adapter for the {@link ItemModifier} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
+ * @version November 21, 2021
  */
 public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
     /**
      * Constructs an instance of the {@link ItemModifierTypeAdapter} class.
      */
-    private ItemModifierTypeAdapter() {
+    public ItemModifierTypeAdapter() {
     } //ItemModifierTypeAdapter
-
-    /**
-     * Returns an instance of the {@link ItemModifierTypeAdapter} class.
-     *
-     * @return an instance of the {@link ItemModifierTypeAdapter} class
-     */
-    public static ItemModifierTypeAdapter create() {
-        return new ItemModifierTypeAdapter();
-    } //create
 
     public static void writeItemModifier(JsonWriter jsonWriter, ItemModifier itemModifier) throws IOException {
         Objects.requireNonNull(jsonWriter, "the specified JsonWriter is null");
@@ -57,7 +48,11 @@ public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
         jsonWriter.beginArray();
 
         for (ItemOption itemOption : itemModifier.options()) {
-            ItemOptionTypeAdapter.writeItemOption(jsonWriter, itemOption);
+            if (itemOption == null) {
+                jsonWriter.nullValue();
+            } else {
+                ItemOptionTypeAdapter.writeItemOption(jsonWriter, itemOption);
+            } //end if
         } //end for
 
         jsonWriter.endArray();
@@ -124,6 +119,8 @@ public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
             JsonToken token = jsonReader.peek();
 
             if (token == JsonToken.NULL) {
+                jsonReader.nextNull();
+
                 continue;
             } //end if
 

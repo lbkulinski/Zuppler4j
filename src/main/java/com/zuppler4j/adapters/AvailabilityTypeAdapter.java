@@ -15,23 +15,14 @@ import java.util.ArrayList;
  * A type adapter for the {@link Availability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
+ * @version November 21, 2021
  */
 public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
     /**
      * Constructs an instance of the {@link AvailabilityTypeAdapter} class.
      */
-    private AvailabilityTypeAdapter() {
+    public AvailabilityTypeAdapter() {
     } //AvailabilityTypeAdapter
-
-    /**
-     * Returns an instance of the {@link AvailabilityTypeAdapter} class.
-     * 
-     * @return an instance of the {@link AvailabilityTypeAdapter} class
-     */
-    public static AvailabilityTypeAdapter create() {
-        return new AvailabilityTypeAdapter();
-    } //create
 
     /**
      * Serializes the specified {@link Availability} using the specified {@link JsonWriter}.
@@ -69,7 +60,11 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
         jsonWriter.beginArray();
 
         for (TimeAvailability timeAvailability : availability.time()) {
-            TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+            if (timeAvailability == null) {
+                jsonWriter.nullValue();
+            } else {
+                TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+            } //end if
         } //end for
 
         jsonWriter.endArray();
@@ -106,6 +101,8 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
             JsonToken token = jsonReader.peek();
 
             if (token == JsonToken.NULL) {
+                jsonReader.nextNull();
+
                 continue;
             } //end if
 
@@ -120,7 +117,17 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
                     jsonReader.beginArray();
 
                     while (jsonReader.hasNext()) {
-                        TimeAvailability timeAvailability = TimeAvailabilityTypeAdapter.readTimeAvailability(jsonReader);
+                        token = jsonReader.peek();
+
+                        TimeAvailability timeAvailability;
+
+                        if (token == JsonToken.NULL) {
+                            jsonReader.nextNull();
+
+                            timeAvailability = null;
+                        } else {
+                            timeAvailability = TimeAvailabilityTypeAdapter.readTimeAvailability(jsonReader);
+                        } //end if
 
                         time.add(timeAvailability);
                     } //end while
