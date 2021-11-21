@@ -97,9 +97,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
 
-            JsonToken token = jsonReader.peek();
-
-            if (token == JsonToken.NULL) {
+            if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
 
                 continue;

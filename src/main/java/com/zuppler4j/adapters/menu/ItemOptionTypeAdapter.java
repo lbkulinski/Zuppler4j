@@ -141,9 +141,7 @@ public final class ItemOptionTypeAdapter extends TypeAdapter<ItemOption> {
         while (jsonReader.hasNext()) {
             String keyName = jsonReader.nextName();
 
-            JsonToken token = jsonReader.peek();
-
-            if (token == JsonToken.NULL) {
+            if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
 
                 continue;
