@@ -12,23 +12,14 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link Image} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
+ * @version November 21, 2021
  */
 public final class ImageTypeAdapter extends TypeAdapter<Image> {
     /**
      * Constructs an instance of the {@link ImageTypeAdapter} class.
      */
-    private ImageTypeAdapter() {
+    public ImageTypeAdapter() {
     } //ImageTypeAdapter
-
-    /**
-     * Returns an instance of the {@link ImageTypeAdapter} class.
-     *
-     * @return an instance of the {@link ImageTypeAdapter} class
-     */
-    public static ImageTypeAdapter create() {
-        return new ImageTypeAdapter();
-    } //create
 
     /**
      * Serializes the specified {@link Image} using the specified {@link JsonWriter}.

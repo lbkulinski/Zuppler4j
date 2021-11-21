@@ -12,7 +12,7 @@ import com.zuppler4j.menu.ItemOption;
  * A test class for the Zuppler4j API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 19, 2021
+ * @version November 21, 2021
  */
 public final class Test {
     /**
@@ -21,12 +21,20 @@ public final class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ImageTypeAdapter imageTypeAdapter = new ImageTypeAdapter();
+
+        TimeAvailabilityTypeAdapter timeAvailabilityTypeAdapter = new TimeAvailabilityTypeAdapter();
+
+        AvailabilityTypeAdapter availabilityTypeAdapter = new AvailabilityTypeAdapter();
+
+        ItemOptionTypeAdapter itemOptionTypeAdapter = new ItemOptionTypeAdapter();
+
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, ImageTypeAdapter.create())
-                               .registerTypeAdapter(TimeAvailability.class, TimeAvailabilityTypeAdapter.create())
-                               .registerTypeAdapter(Availability.class, AvailabilityTypeAdapter.create())
-                               .registerTypeAdapter(ItemOption.class, ItemOptionTypeAdapter.create())
+        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, imageTypeAdapter)
+                               .registerTypeAdapter(TimeAvailability.class, timeAvailabilityTypeAdapter)
+                               .registerTypeAdapter(Availability.class, availabilityTypeAdapter)
+                               .registerTypeAdapter(ItemOption.class, itemOptionTypeAdapter)
                                .serializeNulls()
                                .create();
 
@@ -64,12 +72,19 @@ public final class Test {
                               {
                                   "close": 540,
                                   "open": 540
-                              }
+                              },
+                              {
+                                  "close": null,
+                                  "open": null
+                              },
+                              null
                           ]
                       }""";
 
         Availability availability = gson.fromJson(json, Availability.class);
 
         System.out.println(availability);
+
+        System.out.println(gson.toJson(availability, Availability.class));
     } //main
 }

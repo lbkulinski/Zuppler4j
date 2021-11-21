@@ -12,23 +12,14 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link TimeAvailability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
+ * @version November 21, 2021
  */
 public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailability> {
     /**
      * Constructs an instance of the {@link TimeAvailabilityTypeAdapter} class.
      */
-    private TimeAvailabilityTypeAdapter() {
+    public TimeAvailabilityTypeAdapter() {
     } //TimeAvailabilityTypeAdapter
-
-    /**
-     * Returns an instance of the {@link TimeAvailabilityTypeAdapter} class.
-     *
-     * @return an instance of the {@link TimeAvailabilityTypeAdapter} class
-     */
-    public static TimeAvailabilityTypeAdapter create() {
-        return new TimeAvailabilityTypeAdapter();
-    } //create
 
     /**
      * Serializes the specified {@link TimeAvailability} using the specified {@link JsonWriter}.
@@ -80,6 +71,8 @@ public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailabil
             JsonToken token = jsonReader.peek();
 
             if (token == JsonToken.NULL) {
+                jsonReader.nextNull();
+
                 continue;
             } //end if
 
