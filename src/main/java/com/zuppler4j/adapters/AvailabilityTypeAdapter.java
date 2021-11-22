@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * A type adapter for the {@link Availability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 22, 2021
  */
 public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
     /**
@@ -96,7 +96,7 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
         jsonReader.beginObject();
 
         while (jsonReader.hasNext()) {
-            String name = jsonReader.nextName();
+            String keyName = jsonReader.nextName();
 
             if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
@@ -104,7 +104,7 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
                 continue;
             } //end if
 
-            switch (name) {
+            switch (keyName) {
                 case "custom" -> custom = jsonReader.nextBoolean();
                 case "days" -> days = jsonReader.nextInt();
                 case "priority" -> priority = jsonReader.nextInt();

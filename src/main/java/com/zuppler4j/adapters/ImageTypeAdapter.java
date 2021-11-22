@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link Image} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 22, 2021
  */
 public final class ImageTypeAdapter extends TypeAdapter<Image> {
     /**
@@ -95,7 +95,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
         jsonReader.beginObject();
 
         while (jsonReader.hasNext()) {
-            String name = jsonReader.nextName();
+            String keyName = jsonReader.nextName();
 
             if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
@@ -103,7 +103,7 @@ public final class ImageTypeAdapter extends TypeAdapter<Image> {
                 continue;
             } //end if
 
-            switch (name) {
+            switch (keyName) {
                 case "active" -> active = jsonReader.nextBoolean();
                 case "medium" -> medium = jsonReader.nextString();
                 case "original" -> original = jsonReader.nextString();

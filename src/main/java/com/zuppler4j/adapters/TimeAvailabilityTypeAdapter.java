@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonToken;
  * A type adapter for the {@link TimeAvailability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 22, 2021
  */
 public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailability> {
     /**
@@ -66,7 +66,7 @@ public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailabil
         jsonReader.beginObject();
 
         while (jsonReader.hasNext()) {
-            String name = jsonReader.nextName();
+            String keyName = jsonReader.nextName();
 
             if (jsonReader.peek() == JsonToken.NULL) {
                 jsonReader.nextNull();
@@ -74,7 +74,7 @@ public final class TimeAvailabilityTypeAdapter extends TypeAdapter<TimeAvailabil
                 continue;
             } //end if
 
-            switch (name) {
+            switch (keyName) {
                 case "open" -> open = jsonReader.nextInt();
                 case "close" -> close = jsonReader.nextInt();
             } //end switch
