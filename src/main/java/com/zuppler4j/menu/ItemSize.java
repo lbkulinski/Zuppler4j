@@ -21,7 +21,7 @@ import java.util.Collections;
  * @param servingLabel the serving label of this item size
  * @param servingQty the serving quantity of this item size
  */
-public record ItemSize(Integer id, Float price, Integer sizeId, String sizeName, List<ItemModifier> modifiers,
+public record ItemSize(Integer id, Double price, Integer sizeId, String sizeName, List<ItemModifier> modifiers,
                        Boolean active, Boolean coupon, Integer minQty, Integer priority, String servingLabel,
                        Integer servingQty) {
     /**
