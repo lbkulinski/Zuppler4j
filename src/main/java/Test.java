@@ -7,6 +7,7 @@ import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemModifierTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemOptionTypeAdapter;
+import com.zuppler4j.adapters.menu.ItemSizeTypeAdapter;
 import com.zuppler4j.menu.ItemModifier;
 import com.zuppler4j.menu.ItemOption;
 
@@ -14,7 +15,7 @@ import com.zuppler4j.menu.ItemOption;
  * A test class for the Zuppler4j API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 22, 2021
  */
 public final class Test {
     /**
@@ -30,6 +31,7 @@ public final class Test {
                                .registerTypeAdapter(Availability.class, new AvailabilityTypeAdapter())
                                .registerTypeAdapter(ItemOption.class, new ItemOptionTypeAdapter())
                                .registerTypeAdapter(ItemModifier.class, new ItemModifierTypeAdapter())
+                               .registerTypeAdapter(ItemModifier.class, new ItemSizeTypeAdapter())
                                .serializeNulls()
                                .create();
 
