@@ -8,6 +8,8 @@ import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemModifierTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemOptionTypeAdapter;
 import com.zuppler4j.adapters.menu.ItemSizeTypeAdapter;
+import com.zuppler4j.adapters.menu.ItemTypeAdapter;
+import com.zuppler4j.menu.Item;
 import com.zuppler4j.menu.ItemModifier;
 import com.zuppler4j.menu.ItemOption;
 
@@ -32,56 +34,50 @@ public final class Test {
                                .registerTypeAdapter(ItemOption.class, new ItemOptionTypeAdapter())
                                .registerTypeAdapter(ItemModifier.class, new ItemModifierTypeAdapter())
                                .registerTypeAdapter(ItemModifier.class, new ItemSizeTypeAdapter())
+                               .registerTypeAdapter(Item.class, new ItemTypeAdapter())
                                .serializeNulls()
                                .create();
 
         String json = """
                       {
-                          "custom": false,
-                          "days": 0,
-                          "priority": 1,
-                          "services": 15,
-                          "time": [
-                              {
-                                  "close": 0,
-                                  "open": 0
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": 540,
-                                  "open": 540
-                              },
-                              {
-                                  "close": null,
-                                  "open": null
-                              },
-                              null
-                          ]
+                          "active": true,
+                          "coupon": false,
+                          "couponCode": null,
+                          "description": "house speciality; sharp imported provolone, hot sopresatta, prosciutto di parma, volpi genoa salami, JPG truffle mustard balsamic vinaigrette, hot oil, marinated roman style artichokes, fresh basil, lettuce with red wine vinegar and oregano",
+                          "dietaryPreferences": [],
+                          "dishId": 719678,
+                          "featured": false,
+                          "id": 774516,
+                          "image": {
+                              "active": false,
+                              "medium": null,
+                              "original": null,
+                              "thumb": null,
+                              "tiny": null,
+                              "xlarge": null,
+                              "xxlarge": null
+                          },
+                          "maxPrice": 12.0,
+                          "maxServingQty": 1.0,
+                          "minPrice": 12.0,
+                          "minQty": 0,
+                          "minServingQty": 1.0,
+                          "modifiersCount": 6,
+                          "multipleSizes": false,
+                          "name": "Mr. G",
+                          "price": 12.0,
+                          "priority": 0,
+                          "resourceUrl": null,
+                          "servingLabel": null,
+                          "servingQty": 1.0,
+                          "taxCategoryId": 1,
+                          "upsell": false
                       }""";
 
-        Availability availability = gson.fromJson(json, Availability.class);
+        Item item = gson.fromJson(json, Item.class);
 
-        System.out.println(availability);
+        System.out.println(item);
 
-        System.out.println(gson.toJson(availability, Availability.class));
+        System.out.println(gson.toJson(item, Item.class));
     } //main
 }
