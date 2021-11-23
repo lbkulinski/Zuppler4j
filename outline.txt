@@ -76,12 +76,38 @@ MenuItem
 	- Integer taxCategoryId
 	- Boolean veg
 
+Item
+    - Boolean active
+    - Boolean coupon
+    - String couponCode
+    - String description
+    - List<String> dietaryPreferences
+    - Integer dishId
+    - Boolean featured
+    - Integer id
+    - Image image
+    - Double maxPrice
+    - Double maxServingQty
+    - Double minPrice
+    - Integer minQty
+    - Double minServingQty
+    - Integer modifiersCount
+    - Boolean multipleSizes
+    - String name
+    - Double price
+    - Integer priority
+    - String resourceUrl
+    - String servingLabel
+    - Double servingQty
+    - Integer taxCategoryId
+    - Boolean upsell
+
 Category
 	- Boolean active
 	- String description
 	- Integer id
 	- Image image
-	- List<MenuItem> items
+	- List<Item> items
 	- Integer minOrderQty
 	- String name
 	- Integer priority
