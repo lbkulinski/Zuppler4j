@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * A type adapter for the {@link ItemModifier} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 27, 2021
  */
 public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
     /**
@@ -53,17 +53,23 @@ public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
 
         jsonWriter.name("options");
 
-        jsonWriter.beginArray();
+        List<ItemOption> options = itemModifier.options();
 
-        for (ItemOption itemOption : itemModifier.options()) {
-            if (itemOption == null) {
-                jsonWriter.nullValue();
-            } else {
-                ItemOptionTypeAdapter.writeItemOption(jsonWriter, itemOption);
-            } //end if
-        } //end for
+        if (options == null) {
+            jsonWriter.nullValue();
+        } else {
+            jsonWriter.beginArray();
 
-        jsonWriter.endArray();
+            for (ItemOption itemOption : options) {
+                if (itemOption == null) {
+                    jsonWriter.nullValue();
+                } else {
+                    ItemOptionTypeAdapter.writeItemOption(jsonWriter, itemOption);
+                } //end if
+            } //end for
+
+            jsonWriter.endArray();
+        } //end if
 
         jsonWriter.name("active");
 
@@ -75,13 +81,19 @@ public final class ItemModifierTypeAdapter extends TypeAdapter<ItemModifier> {
 
         jsonWriter.name("dependsOn");
 
-        jsonWriter.beginArray();
+        List<String> dependsOn = itemModifier.dependsOn();
 
-        for (String dependency : itemModifier.dependsOn()) {
-            jsonWriter.value(dependency);
-        } //end for
+        if (dependsOn == null) {
+            jsonWriter.nullValue();
+        } else {
+            jsonWriter.beginArray();
 
-        jsonWriter.endArray();
+            for (String dependency : dependsOn) {
+                jsonWriter.value(dependency);
+            } //end for
+
+            jsonWriter.endArray();
+        } //end if
 
         jsonWriter.endObject();
     } //writeItemModifier

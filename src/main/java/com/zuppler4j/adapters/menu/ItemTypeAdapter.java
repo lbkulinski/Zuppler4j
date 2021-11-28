@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * A type adapter for the {@link Item} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 22, 2021
+ * @version November 27, 2021
  */
 public final class ItemTypeAdapter extends TypeAdapter<Item> {
     /**
@@ -70,13 +70,19 @@ public final class ItemTypeAdapter extends TypeAdapter<Item> {
 
         jsonWriter.name("dietaryPreferences");
 
-        jsonWriter.beginArray();
+        List<String> dietaryPreferences = item.dietaryPreferences();
 
-        for (String dietaryPreference : item.dietaryPreferences()) {
-            jsonWriter.value(dietaryPreference);
-        } //end for
+        if (dietaryPreferences == null) {
+            jsonWriter.nullValue();
+        } else {
+            jsonWriter.beginArray();
 
-        jsonWriter.endArray();
+            for (String dietaryPreference : item.dietaryPreferences()) {
+                jsonWriter.value(dietaryPreference);
+            } //end for
+
+            jsonWriter.endArray();
+        } //end if
 
         jsonWriter.name("dishId");
 
@@ -252,15 +258,7 @@ public final class ItemTypeAdapter extends TypeAdapter<Item> {
                 } //case "dietaryPreferences"
                 case "dishId" -> dishId = jsonReader.nextInt();
                 case "featured" -> featured = jsonReader.nextBoolean();
-                case "image" -> {
-                    if (jsonReader.peek() == JsonToken.NULL) {
-                        jsonReader.nextNull();
-
-                        image = null;
-                    } else {
-                        image = ImageTypeAdapter.readImage(jsonReader);
-                    } //end if
-                } //case "image"
+                case "image" -> image = ImageTypeAdapter.readImage(jsonReader);
                 case "minPrice" -> minPrice = jsonReader.nextDouble();
                 case "maxPrice" -> maxPrice = jsonReader.nextDouble();
                 case "minServingQty" -> minServingQty = jsonReader.nextDouble();
