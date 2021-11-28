@@ -5,10 +5,10 @@ import com.zuppler4j.menu.Item;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.List;
 import com.zuppler4j.Image;
 import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.google.gson.stream.JsonReader;
-import java.util.List;
 import com.google.gson.stream.JsonToken;
 import java.util.ArrayList;
 

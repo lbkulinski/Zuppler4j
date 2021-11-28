@@ -1,14 +1,14 @@
 package com.zuppler4j.adapters;
 
 import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonToken;
 import com.zuppler4j.Availability;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Objects;
-import com.google.gson.stream.JsonReader;
-import com.zuppler4j.TimeAvailability;
 import java.util.List;
+import com.zuppler4j.TimeAvailability;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import java.util.ArrayList;
 
 /**

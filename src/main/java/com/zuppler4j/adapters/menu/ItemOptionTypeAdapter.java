@@ -5,16 +5,16 @@ import com.zuppler4j.menu.ItemOption;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Objects;
+import com.zuppler4j.Image;
 import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.zuppler4j.Image;
 import com.google.gson.stream.JsonToken;
 
 /**
  * A type adapter for the {@link ItemOption} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 21, 2021
+ * @version November 27, 2021
  */
 public final class ItemOptionTypeAdapter extends TypeAdapter<ItemOption> {
     /**

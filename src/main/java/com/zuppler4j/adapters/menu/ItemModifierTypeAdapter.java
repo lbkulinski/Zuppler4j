@@ -5,9 +5,9 @@ import com.zuppler4j.menu.ItemModifier;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.List;
 import com.zuppler4j.menu.ItemOption;
 import com.google.gson.stream.JsonReader;
-import java.util.List;
 import com.google.gson.stream.JsonToken;
 import java.util.ArrayList;
 
