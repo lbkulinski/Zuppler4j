@@ -26,6 +26,14 @@ public final class CategoryTypeAdapter extends TypeAdapter<Category> {
     public CategoryTypeAdapter() {
     } //CategoryTypeAdapter
 
+    /**
+     * Serializes the specified {@link Category} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param category the {@link Category} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonWriter} or {@link Category} is {@code null}
+     */
     public static void writeCategory(JsonWriter jsonWriter, Category category) throws IOException {
         Objects.requireNonNull(jsonWriter, "the specified JsonWriter is null");
 
@@ -106,6 +114,14 @@ public final class CategoryTypeAdapter extends TypeAdapter<Category> {
         jsonWriter.endObject();
     } //writeCategory
 
+    /**
+     * Deserializes a {@link Category} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialized {@link Category} object
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
+     */
     public static Category readCategory(JsonReader jsonReader) throws IOException {
         Integer id = null;
 
@@ -131,6 +147,8 @@ public final class CategoryTypeAdapter extends TypeAdapter<Category> {
             String keyName = jsonReader.nextName();
 
             if (jsonReader.peek() == JsonToken.NULL) {
+                jsonReader.nextNull();
+
                 continue;
             } //end if
 
@@ -192,11 +210,27 @@ public final class CategoryTypeAdapter extends TypeAdapter<Category> {
         return new Category(id, name, description, items, active, image, minOrderQty, priority, tags);
     } //readCategory
 
+    /**
+     * Serializes the specified {@link Category} using the specified {@link JsonWriter}.
+     *
+     * @param jsonWriter the {@link JsonWriter} to be used in the operation
+     * @param category the {@link Category} to be used in the operation
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonWriter} or {@link Category} is {@code null}
+     */
     @Override
     public void write(JsonWriter jsonWriter, Category category) throws IOException {
         CategoryTypeAdapter.writeCategory(jsonWriter, category);
     } //write
 
+    /**
+     * Deserializes a {@link Category} object using the specified {@link JsonReader}.
+     *
+     * @param jsonReader the {@link JsonReader} to be used in the operation
+     * @return the deserialized {@link Category} object
+     * @throws IOException if an I/O error occurs
+     * @throws NullPointerException if the specified {@link JsonReader} is {@code null}
+     */
     @Override
     public Category read(JsonReader jsonReader) throws IOException {
         return CategoryTypeAdapter.readCategory(jsonReader);
