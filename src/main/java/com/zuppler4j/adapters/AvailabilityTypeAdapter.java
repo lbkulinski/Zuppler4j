@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * A type adapter for the {@link Availability} class.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 22, 2021
+ * @version November 27, 2021
  */
 public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
     /**
@@ -57,17 +57,23 @@ public final class AvailabilityTypeAdapter extends TypeAdapter<Availability> {
 
         jsonWriter.name("time");
 
-        jsonWriter.beginArray();
+        List<TimeAvailability> time = availability.time();
 
-        for (TimeAvailability timeAvailability : availability.time()) {
-            if (timeAvailability == null) {
-                jsonWriter.nullValue();
-            } else {
-                TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
-            } //end if
-        } //end for
+        if (time == null) {
+            jsonWriter.nullValue();
+        } else {
+            jsonWriter.beginArray();
 
-        jsonWriter.endArray();
+            for (TimeAvailability timeAvailability : time) {
+                if (timeAvailability == null) {
+                    jsonWriter.nullValue();
+                } else {
+                    TimeAvailabilityTypeAdapter.writeTimeAvailability(jsonWriter, timeAvailability);
+                } //end if
+            } //end for
+
+            jsonWriter.endArray();
+        } //end if
 
         jsonWriter.endObject();
     } //writeAvailability
