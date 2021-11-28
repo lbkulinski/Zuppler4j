@@ -77,7 +77,7 @@ public final class ItemTypeAdapter extends TypeAdapter<Item> {
         } else {
             jsonWriter.beginArray();
 
-            for (String dietaryPreference : item.dietaryPreferences()) {
+            for (String dietaryPreference : dietaryPreferences) {
                 jsonWriter.value(dietaryPreference);
             } //end for
 
