@@ -6,10 +6,7 @@ import com.zuppler4j.adapters.AvailabilityTypeAdapter;
 import com.zuppler4j.adapters.ImageTypeAdapter;
 import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
 import com.zuppler4j.adapters.menu.*;
-import com.zuppler4j.menu.Category;
-import com.zuppler4j.menu.Item;
-import com.zuppler4j.menu.ItemModifier;
-import com.zuppler4j.menu.ItemOption;
+import com.zuppler4j.menu.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,7 +35,7 @@ public final class Test {
                                .registerTypeAdapter(ItemModifier.class, new ItemSizeTypeAdapter())
                                .registerTypeAdapter(Item.class, new ItemTypeAdapter())
                                .registerTypeAdapter(Category.class, new CategoryTypeAdapter())
-                               .registerTypeAdapter(Category.class, new MenuTypeAdapter())
+                               .registerTypeAdapter(Menu.class, new MenuTypeAdapter())
                                .serializeNulls()
                                .create();
 
@@ -56,14 +53,26 @@ public final class Test {
             return;
         } //end try catch
 
-        System.out.println(json);
+        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
 
-        /*
-        Category category = gson.fromJson(json, Category.class);
+        if (!jsonObject.has("data")) {
+            System.out.println("Error: The JSON response does not contain a \"data\" member");
+        } //end if
 
-        System.out.println(category);
+        JsonObject data = jsonObject.getAsJsonObject("data");
 
-        System.out.println(gson.toJson(category, Category.class));
-         */
+        if (!data.has("menus")) {
+            System.out.println("Error: The JSON response does not contain a \"menus\" member");
+        } //end if
+
+        JsonArray menus = data.getAsJsonArray("menus");
+
+        for (JsonElement element : menus) {
+            Menu menu = gson.fromJson(element, Menu.class);
+
+            String menuJson = gson.toJson(menu, Menu.class);
+
+            System.out.println(menuJson);
+        } //end for
     } //main
 }
