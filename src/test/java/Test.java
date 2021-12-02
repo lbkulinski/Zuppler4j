@@ -192,7 +192,7 @@ public final class Test {
                                .serializeNulls()
                                .create();
 
-        String fileName = "jpg-menu.txt";
+        String fileName = "src/test/resources/jpg-menu.txt";
 
         Path path = Path.of(fileName);
 
