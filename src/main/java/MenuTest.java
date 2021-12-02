@@ -1,10 +1,21 @@
-import com.google.gson.Gson;
+import com.google.gson.*;
+import com.zuppler4j.Availability;
+import com.zuppler4j.Image;
+import com.zuppler4j.TimeAvailability;
+import com.zuppler4j.adapters.AvailabilityTypeAdapter;
+import com.zuppler4j.adapters.ImageTypeAdapter;
+import com.zuppler4j.adapters.TimeAvailabilityTypeAdapter;
+import com.zuppler4j.adapters.menu.*;
+import com.zuppler4j.menu.*;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public final class MenuTest {
     public static void main(String[] args) throws Exception {
@@ -100,7 +111,20 @@ public final class MenuTest {
                                            "query", query,
                                            "variables", variables);
 
-        Gson gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Gson gson = gsonBuilder.registerTypeAdapter(Image.class, new ImageTypeAdapter())
+                               .registerTypeAdapter(TimeAvailability.class, new TimeAvailabilityTypeAdapter())
+                               .registerTypeAdapter(Availability.class, new AvailabilityTypeAdapter())
+                               .registerTypeAdapter(ItemOption.class, new ItemOptionTypeAdapter())
+                               .registerTypeAdapter(ItemModifier.class, new ItemModifierTypeAdapter())
+                               .registerTypeAdapter(ItemSize.class, new ItemSizeTypeAdapter())
+                               .registerTypeAdapter(Item.class, new ItemTypeAdapter())
+                               .registerTypeAdapter(Category.class, new CategoryTypeAdapter())
+                               .registerTypeAdapter(Menu.class, new MenuTypeAdapter())
+                               .registerTypeAdapter(MenuItem.class, new MenuItemTypeAdapter())
+                               .serializeNulls()
+                               .create();
 
         String postFieldsString = gson.toJson(postFields);
 
@@ -117,6 +141,61 @@ public final class MenuTest {
 
         HttpResponse<String> response = client.send(request, bodyHandler);
 
-        System.out.println(response.body());
+        String menusJson = response.body();
+
+        if (menusJson == null) {
+            return;
+        } //end if
+
+        JsonElement jsonElement = gson.fromJson(menusJson, JsonElement.class);
+
+        if (!jsonElement.isJsonObject()) {
+            return;
+        } //end if
+
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        if (!jsonObject.has("data")) {
+            return;
+        } //end if
+
+        JsonElement dataElement = jsonObject.get("data");
+
+        if (!dataElement.isJsonObject()) {
+            return;
+        } //end if
+
+        JsonObject dataObject = dataElement.getAsJsonObject();
+
+        if (!dataObject.has("menus")) {
+            return;
+        } //end if
+
+        JsonElement menusElement = dataObject.get("menus");
+
+        if (!menusElement.isJsonArray()) {
+            return;
+        } //end if
+
+        JsonArray menusArray = menusElement.getAsJsonArray();
+
+        List<Menu> menus = new ArrayList<>();
+
+        for (JsonElement menuElement : menusArray) {
+            Menu menu = gson.fromJson(menuElement, Menu.class);
+
+            menus.add(menu);
+        } //end for
+
+        menus.stream()
+             .map(Menu::categories)
+             .flatMap(List::stream)
+             .map(Category::items)
+             .flatMap(List::stream)
+             .map(Item::getMenuItem)
+             .filter(Optional::isPresent)
+             .map(Optional::get)
+             .map(menuItem -> gson.toJson(menuItem, MenuItem.class))
+             .forEach(System.out::println);
     } //main
 }
