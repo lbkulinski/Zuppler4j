@@ -8,20 +8,20 @@ import com.zuppler4j.Image;
  * @apiNote The Zuppler GraphQL {@code ItemOption} object has a {@code default} field. It has been renamed to
  * {@code preselected} in Zuppler4j, as {@code default} is a keyword.
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 20, 2021
- * @param id the ID of this item option
- * @param name the name of this item option
- * @param price the price of this item option
- * @param active the active flag of this item option
- * @param preselected the preselected flag of this item option
- * @param description the description of this item option
- * @param dishId the dish ID of this item option
- * @param group the group of this item option
- * @param groupLabel the group label of this item option
- * @param image the {@code Image} of this item option
- * @param pricedIn the priced in flag of this item option
- * @param priority the priority of this item option
- * @param weight the weight of this item option
+ * @version December 2, 2021
+ * @param id the ID of this {@link ItemOption}
+ * @param name the name of this {@link ItemOption}
+ * @param price the price of this {@link ItemOption}
+ * @param active the active flag of this {@link ItemOption}
+ * @param preselected the preselected flag of this {@link ItemOption}
+ * @param description the description of this {@link ItemOption}
+ * @param dishId the dish ID of this {@link ItemOption}
+ * @param group the group of this {@link ItemOption}
+ * @param groupLabel the group label of this {@link ItemOption}
+ * @param image the {@link Image} of this {@link ItemOption}
+ * @param pricedIn the priced in flag of this {@link ItemOption}
+ * @param priority the priority of this {@link ItemOption}
+ * @param weight the weight of this {@link ItemOption}
  */
 public record ItemOption(Integer id, String name, Double price, Boolean active, Boolean preselected,
                          String description, Integer dishId, String group, String groupLabel, Image image,

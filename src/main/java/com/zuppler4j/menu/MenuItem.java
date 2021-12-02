@@ -11,33 +11,33 @@ import java.util.Collections;
  *
  * @apiNote {@code veg} could mean vegetarian or vegan. It is not specified.
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 7, 2021
- * @param id the ID of this menu item
- * @param name the name of this menu item
- * @param description the description of this menu item
- * @param sizes the {@code List} of {@code ItemSize}s of this menu item
- * @param alias the alias of this menu item
- * @param availability the {@code Availability} of this menu item
- * @param dietaryPreferences the {@code List} of dietary preferences of this menu item
- * @param image the {@code Image} of this menu item
- * @param spicy the spiciness of this menu item
- * @param taxCategoryId the tax category ID of this menu item
- * @param veg the veg flag of this menu item
+ * @version December 2, 2021
+ * @param id the ID of this {@link MenuItem}
+ * @param name the name of this {@link MenuItem}
+ * @param description the description of this {@link MenuItem}
+ * @param sizes the {@link List} of {@link ItemSize}s of this {@link MenuItem}
+ * @param alias the alias of this {@link MenuItem}
+ * @param availability the {@link Availability} of this {@link MenuItem}
+ * @param dietaryPreferences the {@link List} of dietary preferences of this {@link MenuItem}
+ * @param image the {@link Image} of this {@link MenuItem}
+ * @param spicy the spiciness of this {@link MenuItem}
+ * @param taxCategoryId the tax category ID of this {@link MenuItem}
+ * @param veg the veg flag of this {@link MenuItem}
  */
 public record MenuItem(Integer id, String name, String description, List<ItemSize> sizes, String alias,
                        Availability availability, List<String> dietaryPreferences, Image image, Integer spicy,
                        Integer taxCategoryId, Boolean veg) {
     /**
-     * Constructs an instance of the {@code MenuItem} class.
+     * Constructs an instance of the {@link MenuItem} class.
      *
      * @param id the ID to be used in construction
      * @param name the name to be used in construction
      * @param description the description to be used in construction
-     * @param sizes the {@code List} of {@code ItemSize}s to be used in construction
+     * @param sizes the {@link List} of {@link ItemSize}s to be used in construction
      * @param alias the alias to be used in construction
-     * @param availability the {@code Availability} to be used in construction
-     * @param dietaryPreferences the {@code List} of dietary preferences to be used in construction
-     * @param image the {@code Image} to be used in construction
+     * @param availability the {@link Availability} to be used in construction
+     * @param dietaryPreferences the {@link List} of dietary preferences to be used in construction
+     * @param image the {@link Image} to be used in construction
      * @param spicy the spiciness to be used in construction
      * @param taxCategoryId the tax category ID to be used in construction
      * @param veg the veg flag to be used in construction

@@ -6,12 +6,12 @@ import java.util.List;
  * An availability of the Zuppler API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version November 6, 2021
- * @param custom the custom flag of this availability
- * @param days the days of this availability
- * @param priority the priority of this availability
- * @param services the services of this availability
- * @param time the {@code List} of {@code TimeAvailability} objects of this availability
+ * @version December 2, 2021
+ * @param custom the custom flag of this {@link Availability}
+ * @param days the days of this {@link Availability}
+ * @param priority the priority of this {@link Availability}
+ * @param services the services of this {@link Availability}
+ * @param time the {@link List} of {@link TimeAvailability} objects of this {@link Availability}
  */
 public record Availability(Boolean custom, Integer days, Integer priority, Integer services,
                            List<TimeAvailability> time) {
