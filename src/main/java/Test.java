@@ -21,7 +21,7 @@ import java.util.Map;
  * A test class for the Zuppler4j API.
  *
  * @author Logan Kulinski, lbkulinski@icloud.com
- * @version December 1, 2021
+ * @version December 2, 2021
  */
 public final class Test {
     /**
@@ -185,10 +185,11 @@ public final class Test {
                                .registerTypeAdapter(Item.class, new ItemTypeAdapter())
                                .registerTypeAdapter(Category.class, new CategoryTypeAdapter())
                                .registerTypeAdapter(Menu.class, new MenuTypeAdapter())
+                               .registerTypeAdapter(MenuItem.class, new MenuItemTypeAdapter())
                                .serializeNulls()
                                .create();
 
-        String fileName = "jpg-menu.txt";
+        String fileName = "artichoke.txt";
 
         Path path = Path.of(fileName);
 
@@ -210,18 +211,16 @@ public final class Test {
 
         JsonObject data = jsonObject.getAsJsonObject("data");
 
-        if (!data.has("menus")) {
-            System.out.println("Error: The JSON response does not contain a \"menus\" member");
+        if (!data.has("item")) {
+            System.out.println("Error: The JSON response does not contain an \"item\" member");
         } //end if
 
-        JsonArray menus = data.getAsJsonArray("menus");
+        JsonObject item = data.getAsJsonObject("item");
 
-        for (JsonElement element : menus) {
-            Menu menu = gson.fromJson(element, Menu.class);
+        MenuItem menuItem = gson.fromJson(item, MenuItem.class);
 
-            String menuJson = gson.toJson(menu, Menu.class);
+        String menuItemJson = gson.toJson(menuItem, MenuItem.class);
 
-            System.out.println(menuJson);
-        } //end for
+        System.out.println(menuItemJson);
     } //main
 }
