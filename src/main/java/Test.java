@@ -15,7 +15,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * A test class for the Zuppler4j API.
@@ -189,7 +192,7 @@ public final class Test {
                                .serializeNulls()
                                .create();
 
-        String fileName = "artichoke.txt";
+        String fileName = "jpg-menu.txt";
 
         Path path = Path.of(fileName);
 
@@ -209,18 +212,31 @@ public final class Test {
             System.out.println("Error: The JSON response does not contain a \"data\" member");
         } //end if
 
-        JsonObject data = jsonObject.getAsJsonObject("data");
+        JsonObject dataObject = jsonObject.getAsJsonObject("data");
 
-        if (!data.has("item")) {
-            System.out.println("Error: The JSON response does not contain an \"item\" member");
+        if (!dataObject.has("menus")) {
+            System.out.println("Error: The JSON response does not contain an \"menus\" member");
         } //end if
 
-        JsonObject item = data.getAsJsonObject("item");
+        JsonArray menusArray = dataObject.getAsJsonArray("menus");
 
-        MenuItem menuItem = gson.fromJson(item, MenuItem.class);
+        List<Menu> menus = new ArrayList<>();
 
-        String menuItemJson = gson.toJson(menuItem, MenuItem.class);
+        for (JsonElement menuElement : menusArray) {
+            Menu menu = gson.fromJson(menuElement, Menu.class);
 
-        System.out.println(menuItemJson);
+            menus.add(menu);
+        } //end for
+
+        menus.stream()
+             .map(Menu::categories)
+             .flatMap(List::stream)
+             .map(Category::items)
+             .flatMap(List::stream)
+             .map(Item::getMenuItem)
+             .filter(Optional::isPresent)
+             .map(Optional::get)
+             .map(menuItem -> gson.toJson(menuItem, MenuItem.class))
+             .forEach(System.out::println);
     } //main
 }
