@@ -181,7 +181,7 @@ public final class Test {
                                .registerTypeAdapter(Availability.class, new AvailabilityTypeAdapter())
                                .registerTypeAdapter(ItemOption.class, new ItemOptionTypeAdapter())
                                .registerTypeAdapter(ItemModifier.class, new ItemModifierTypeAdapter())
-                               .registerTypeAdapter(ItemModifier.class, new ItemSizeTypeAdapter())
+                               .registerTypeAdapter(ItemSize.class, new ItemSizeTypeAdapter())
                                .registerTypeAdapter(Item.class, new ItemTypeAdapter())
                                .registerTypeAdapter(Category.class, new CategoryTypeAdapter())
                                .registerTypeAdapter(Menu.class, new MenuTypeAdapter())
