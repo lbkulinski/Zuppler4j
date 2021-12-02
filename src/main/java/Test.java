@@ -24,6 +24,12 @@ import java.util.Map;
  * @version December 1, 2021
  */
 public final class Test {
+    /**
+     * Returns the schema found at the specified {@link URI} {@link String}.
+     *
+     * @param uriString the {@link URI} {@link String} to be used in the operation
+     * @return the schema found at the specified {@link URI} {@link String}
+     */
     private static String getSchema(String uriString) {
         URI uri = URI.create(uriString);
 
@@ -168,11 +174,6 @@ public final class Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String uriString = "https://orders-api5.zuppler.com/graphql";
-
-        System.out.println(Test.getSchema(uriString));
-
-        /*
         GsonBuilder gsonBuilder = new GsonBuilder();
 
         Gson gson = gsonBuilder.registerTypeAdapter(Image.class, new ImageTypeAdapter())
@@ -222,6 +223,5 @@ public final class Test {
 
             System.out.println(menuJson);
         } //end for
-         */
     } //main
 }
